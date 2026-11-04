@@ -3,7 +3,7 @@ import { fail, ok, toErrorCode, type ActionResult } from "@/lib/errors";
 import { createClient } from "@/lib/supabase/server";
 import { onboardingSchema } from "@/lib/validation/schemas";
 
-export const CONSENT_VERSION = "2026-11-v1";
+const CONSENT_VERSION = "2026-11-v1";
 
 export async function completeOnboardingAction(input: unknown): Promise<ActionResult> {
   const parsed = onboardingSchema.safeParse(input);

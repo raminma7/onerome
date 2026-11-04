@@ -898,6 +898,11 @@ isOneToOne: false
               "connection_id": string,"deadline": string,"match_id": string,"me_subscribed": boolean,"my_last_read_at": string,"partner_id": string,"partner_last_read_at": string,"partner_subscribed": boolean,"pending_sender": string,"pending_since": string,"started_at": string,"started_by": string
             }[]
                            },
+"get_blocked_users":
+{ Args: Record<PropertyKey, never>; Returns: {
+              "display_name": string,"user_id": string
+            }[]
+                           },
 "get_discover_candidates":
 { Args: { "p_limit"?: number }; Returns: {
               "age": number,"bio": string,"core_values": (string)[],"display_name": string,"education": string,"gender": Database["public"]['Enums']["gender"],"id": string,"interests": (string)[],"is_verified": boolean,"languages": (string)[],"lifestyle": Json,"neighborhood": string,"neighborhood_name": string,"neighborhood_zone": string,"occupation": string,"personality": (string)[],"photo_paths": (string)[],"pref_goals": (Database["public"]['Enums']["relationship_goal"])[],"relationship_goal": Database["public"]['Enums']["relationship_goal"]

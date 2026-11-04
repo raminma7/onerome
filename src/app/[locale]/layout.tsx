@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Toaster } from "sonner";
+import { ServiceWorkerRegister } from "@/components/sw-register";
 import { routing, toLocale } from "@/i18n/routing";
 import { publicEnv } from "@/lib/env";
 import "../globals.css";
@@ -26,7 +27,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
     manifest: "/manifest.webmanifest",
     appleWebApp: { capable: true, title: "OneRome", statusBarStyle: "default" },
     alternates: { languages: { it: "/it", en: "/en" } },
-    icons: { icon: "/icons/icon.svg", apple: "/icons/apple-touch-icon.png" },
+    icons: { icon: [{ url: "/icons/icon.svg", type: "image/svg+xml" }, { url: "/icons/icon-192.png", sizes: "192x192" }], apple: "/icons/apple-touch-icon.png" },
   };
 }
 
@@ -47,6 +48,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
       <body className="min-h-full">
         <NextIntlClientProvider>
           {children}
+          <ServiceWorkerRegister />
           <Toaster position="top-center" toastOptions={{ className: "!rounded-2xl !border-line !bg-ivory !text-ink" }} />
         </NextIntlClientProvider>
       </body>

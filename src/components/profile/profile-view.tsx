@@ -88,6 +88,9 @@ export function ProfileDetails({ profile, compatibility }: { profile: ProfileVie
   const t = useTranslations("profile");
   const o = useTranslations("profileOptions");
   const lifestyle = (profile.lifestyle ?? {}) as Record<string, string>;
+  // Unknown identifiers (e.g. removed options) are skipped instead of breaking the page.
+  const label = (key: string) => (o.has(key as "interests.art") ? o(key as "interests.art") : null);
+  const labels = (prefix: string, values: string[] | null) => (values ?? []).map((v) => label(`${prefix}.${v}`)).filter((x): x is string => Boolean(x));
   const section = (title: string, items: string[]) =>
     items.length > 0 && (
       <div>
@@ -115,16 +118,16 @@ export function ProfileDetails({ profile, compatibility }: { profile: ProfileVie
         {profile.occupation && <span className="flex items-center gap-1.5"><Briefcase className="size-4 text-muted" />{profile.occupation}</span>}
         {profile.education && <span className="flex items-center gap-1.5"><GraduationCap className="size-4 text-muted" />{profile.education}</span>}
       </div>
-      {section(t("interests"), (profile.interests ?? []).map((i) => o(`interests.${i}` as "interests.art")))}
-      {section(t("values"), (profile.core_values ?? []).map((i) => o(`values.${i}` as "values.family")))}
-      {section(t("personality"), (profile.personality ?? []).map((i) => o(`personality.${i}` as "personality.calm")))}
+      {section(t("interests"), labels("interests", profile.interests))}
+      {section(t("values"), labels("values", profile.core_values))}
+      {section(t("personality"), labels("personality", profile.personality))}
       {section(
         t("lifestyle"),
         (Object.keys(LIFESTYLE) as LifestyleKey[])
           .filter((k) => lifestyle[k])
           .map((k) => `${o(`lifestyleQuestion.${k}`)}: ${o(`lifestyle.${k}.${lifestyle[k]}` as "lifestyle.smoking.never")}`),
       )}
-      {section(t("languages"), (profile.languages ?? []).map((l) => o(`languages.${l}` as "languages.it")))}
+      {section(t("languages"), labels("languages", profile.languages))}
     </div>
   );
 }
