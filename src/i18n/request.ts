@@ -9,5 +9,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
     locale,
     messages: (await import(`../messages/${locale}.json`)).default,
     timeZone: "Europe/Rome",
+    // Shared "now" keeps server and client renders of time-based UI identical during hydration.
+    now: new Date(),
   };
 });
