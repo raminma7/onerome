@@ -1,15 +1,17 @@
 import { cn } from "@/lib/utils";
 
-/** Wordmark with a small Roman arch as the "O". */
-export function Logo({ className }: { className?: string }) {
+/** Wordmark: gradient arch-heart mark + serif "OneRome". */
+export function Logo({ className, light }: { className?: string; light?: boolean }) {
   return (
-    <span className={cn("inline-flex items-center gap-1.5 font-display text-2xl tracking-tight text-ink", className)}>
-      <svg viewBox="0 0 24 28" className="h-[1.05em] w-auto text-bordeaux" aria-hidden>
-        <path d="M3 27V12a9 9 0 0 1 18 0v15" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
-        <path d="M8 27v-9a4 4 0 0 1 8 0v9" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" opacity=".55" />
-      </svg>
+    <span className={cn("inline-flex items-center gap-2 font-display text-[1.65rem] leading-none tracking-tight", light ? "text-white" : "text-ink", className)}>
+      <span className="bg-brand squircle flex size-[1.25em] items-center justify-center shadow-glow">
+        <svg viewBox="0 0 24 24" className="size-[0.8em] text-white" aria-hidden>
+          <path d="M5 21V11a7 7 0 0 1 14 0v10" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
+          <path d="M12 17.5s-3.2-1.9-3.2-4.1a1.75 1.75 0 0 1 3.2-1 1.75 1.75 0 0 1 3.2 1c0 2.2-3.2 4.1-3.2 4.1z" fill="currentColor" />
+        </svg>
+      </span>
       <span>
-        One<span className="text-bordeaux">Rome</span>
+        One<span className="italic">Rome</span>
       </span>
     </span>
   );

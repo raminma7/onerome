@@ -1,50 +1,85 @@
 @import "tailwindcss";
 
-/* OneRome design tokens — warm Roman palette: travertine, cream, soft black, bordeaux. */
+/*
+ * OneRome design system v2
+ * Inspired by modern dating/lifestyle apps: immersive photo cards, glass surfaces,
+ * a warm "Roman sunset" gradient (wine → coral → apricot) and expressive serif display type.
+ */
 @theme {
-  --color-ivory: #fbf8f3;
-  --color-cream: #f6efe4;
-  --color-travertine: #ece2d3;
-  --color-line: #e3d7c6;
-  --color-ink: #1d1a18;
-  --color-ink-soft: #3a3430;
-  --color-muted: #776c62;
-  --color-bordeaux: #7a1f2b;
-  --color-bordeaux-dark: #5c1520;
-  --color-bordeaux-soft: #f3e3e3;
-  --color-gold: #b48a52;
-  --color-gold-soft: #f1e6d3;
-  --color-olive: #5f6b3c;
-  --color-success: #3f6b4a;
-  --color-danger: #a3272f;
+  /* Neutrals: warm, slightly pink-tinted */
+  --color-ivory: #fdf9f6;
+  --color-cream: #f7efe9;
+  --color-travertine: #efe3da;
+  --color-line: #eadcd2;
+  --color-ink: #17110f;
+  --color-ink-soft: #3b302c;
+  --color-muted: #8a7c75;
+  --color-night: #120c0d;
+  --color-night-2: #1d1416;
 
-  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
-  --font-sans: var(--font-inter), "Inter", system-ui, sans-serif;
+  /* Brand */
+  --color-bordeaux: #8e1838;
+  --color-bordeaux-dark: #5e0f25;
+  --color-bordeaux-soft: #fbe7ea;
+  --color-coral: #ff5a5f;
+  --color-rose: #ff7a8a;
+  --color-apricot: #ffb067;
+  --color-gold: #d9a35b;
+  --color-gold-soft: #fbefdc;
+  --color-olive: #6f8a4a;
+  --color-success: #2f9e6e;
+  --color-danger: #e0384b;
 
-  --radius-card: 1.5rem;
-  --shadow-soft: 0 1px 2px rgb(29 26 24 / 0.04), 0 8px 24px -12px rgb(29 26 24 / 0.18);
-  --shadow-lift: 0 2px 4px rgb(29 26 24 / 0.05), 0 24px 48px -24px rgb(92 21 32 / 0.35);
+  --font-serif: var(--font-display), "Instrument Serif", Georgia, serif;
+  --font-sans: var(--font-geist), "Geist", system-ui, sans-serif;
 
-  --animate-fade-up: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --radius-card: 1.75rem;
+  --shadow-soft: 0 1px 2px rgb(23 17 15 / 0.04), 0 10px 30px -14px rgb(23 17 15 / 0.18);
+  --shadow-lift: 0 2px 6px rgb(23 17 15 / 0.06), 0 30px 60px -28px rgb(94 15 37 / 0.45);
+  --shadow-glow: 0 10px 40px -8px rgb(255 90 95 / 0.55);
+
+  --animate-fade-up: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-fade-in: fade-in 0.4s ease-out both;
+  --animate-pop: pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.2s linear infinite;
+  --animate-aurora: aurora 18s ease-in-out infinite alternate;
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-heartbeat: heartbeat 1.6s ease-in-out infinite;
 
   @keyframes fade-up {
-    from {
-      opacity: 0;
-      transform: translateY(12px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
   }
   @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes pop {
+    0% { opacity: 0; transform: scale(0.85); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+    50% { transform: translateY(-10px) rotate(var(--r, 0deg)); }
+  }
+  @keyframes shimmer {
+    from { background-position: -200% 0; }
+    to { background-position: 200% 0; }
+  }
+  @keyframes aurora {
+    0% { transform: translate3d(-5%, -5%, 0) rotate(0deg) scale(1); }
+    100% { transform: translate3d(5%, 5%, 0) rotate(25deg) scale(1.15); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.15); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.1); }
   }
 }
 
@@ -56,45 +91,115 @@
     background: var(--color-ivory);
     color: var(--color-ink);
     font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.006em;
   }
   h1,
   h2,
   h3,
   .font-display {
     font-family: var(--font-serif);
-    font-weight: 500;
-    letter-spacing: -0.01em;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.02;
   }
   ::selection {
-    background: var(--color-bordeaux-soft);
-    color: var(--color-bordeaux-dark);
+    background: var(--color-rose);
+    color: white;
   }
   :focus-visible {
-    outline: 2px solid var(--color-bordeaux);
+    outline: 2px solid var(--color-coral);
     outline-offset: 2px;
   }
 }
 
 @layer utilities {
-  /* Roman arch silhouette used for portraits and hero imagery. */
+  /* Signature gradient */
+  .bg-brand {
+    background-image: linear-gradient(135deg, #8e1838 0%, #e0384b 45%, #ff7a5c 75%, #ffb067 100%);
+  }
+  .bg-brand-soft {
+    background-image: linear-gradient(135deg, #fde3e7 0%, #ffe9dc 60%, #fff3e1 100%);
+  }
+  .text-brand {
+    background-image: linear-gradient(120deg, #8e1838 0%, #e0384b 40%, #ff7a5c 70%, #ffb067 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-brand-light {
+    background-image: linear-gradient(120deg, #ffb3bd 0%, #ff8a7a 45%, #ffcf8f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  /* Frosted glass surfaces */
+  .glass {
+    background: rgb(255 255 255 / 0.62);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid rgb(255 255 255 / 0.6);
+  }
+  .glass-dark {
+    background: rgb(20 12 14 / 0.45);
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    border: 1px solid rgb(255 255 255 / 0.12);
+  }
+  /* Soft ambient page background */
+  .bg-ambient {
+    background-color: var(--color-ivory);
+    background-image:
+      radial-gradient(60rem 40rem at 110% -10%, rgb(255 122 92 / 0.12), transparent 60%),
+      radial-gradient(50rem 40rem at -20% 10%, rgb(142 24 56 / 0.08), transparent 60%),
+      radial-gradient(40rem 30rem at 50% 120%, rgb(255 176 103 / 0.1), transparent 60%);
+    background-attachment: fixed;
+  }
+  .bg-night {
+    background-color: var(--color-night);
+    background-image:
+      radial-gradient(60rem 40rem at 85% 0%, rgb(224 56 75 / 0.35), transparent 60%),
+      radial-gradient(50rem 40rem at 0% 30%, rgb(142 24 56 / 0.45), transparent 60%),
+      radial-gradient(40rem 30rem at 60% 110%, rgb(255 176 103 / 0.22), transparent 60%);
+  }
+  .noise::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.08;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
   .arch {
-    border-radius: 999px 999px 1.25rem 1.25rem;
+    border-radius: 999px 999px 1.5rem 1.5rem;
+  }
+  .squircle {
+    border-radius: 30%;
   }
   .safe-bottom {
     padding-bottom: env(safe-area-inset-bottom);
-  }
-  .bg-travertine-texture {
-    background-color: var(--color-cream);
-    background-image:
-      radial-gradient(circle at 20% 10%, rgb(180 138 82 / 0.08), transparent 40%),
-      radial-gradient(circle at 80% 90%, rgb(122 31 43 / 0.06), transparent 45%);
   }
   .scrollbar-none {
     scrollbar-width: none;
   }
   .scrollbar-none::-webkit-scrollbar {
     display: none;
+  }
+  .shimmer {
+    background: linear-gradient(90deg, transparent 0%, rgb(255 255 255 / 0.55) 50%, transparent 100%);
+    background-size: 200% 100%;
+  }
+  .mask-fade-x {
+    mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  }
+  /* Kept for backwards compatibility with existing markup */
+  .bg-travertine-texture {
+    background-color: var(--color-ivory);
+    background-image:
+      radial-gradient(50rem 30rem at 100% 0%, rgb(255 122 92 / 0.12), transparent 60%),
+      radial-gradient(40rem 30rem at 0% 100%, rgb(142 24 56 / 0.08), transparent 60%);
   }
 }
 
@@ -103,6 +208,7 @@
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }

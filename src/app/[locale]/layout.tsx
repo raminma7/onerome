@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Geist, Instrument_Serif } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -9,8 +9,8 @@ import { routing, toLocale } from "@/i18n/routing";
 import { publicEnv } from "@/lib/env";
 import "../globals.css";
 
-const serif = Cormorant_Garamond({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-cormorant", display: "swap" });
-const sans = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+const serif = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--font-display", display: "swap" });
+const sans = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: LayoutProps<"/[locale]">): Pr
 }
 
 export const viewport: Viewport = {
-  themeColor: "#fbf8f3",
+  themeColor: "#fdf9f6",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -49,7 +49,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
         <NextIntlClientProvider>
           {children}
           <ServiceWorkerRegister />
-          <Toaster position="top-center" toastOptions={{ className: "!rounded-2xl !border-line !bg-ivory !text-ink" }} />
+          <Toaster position="top-center" toastOptions={{ className: "!rounded-2xl !border-white/60 !bg-white/80 !backdrop-blur-xl !text-ink !shadow-lift" }} />
         </NextIntlClientProvider>
       </body>
     </html>

@@ -13,9 +13,9 @@ export default async function AppLayout({ children }: LayoutProps<"/[locale]">) 
   await supabase.from("profiles").update({ last_active_at: new Date().toISOString() }).eq("id", profile.id);
 
   return (
-    <div className="min-h-dvh bg-ivory">
+    <div className="bg-ambient min-h-dvh">
       <AppNav userId={profile.id} initialUnread={count ?? 0} inConnection={Boolean(active)} isAdmin={profile.role === "admin"} />
-      <main className="mx-auto w-full max-w-6xl px-4 pb-28 pt-6 sm:px-6 md:pb-12 md:pt-10">{children}</main>
+      <main className="mx-auto w-full max-w-6xl px-4 pb-32 pt-6 sm:px-6 md:pb-14 md:pt-10">{children}</main>
     </div>
   );
 }

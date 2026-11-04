@@ -61,7 +61,9 @@ export default async function DiscoverPage({ params }: PageProps<"/[locale]/disc
     })),
   ).slice(0, 30);
 
-  const urls = await signPhotoPaths(supabase, ranked.flatMap((c) => c.photo_paths));
+  const { data: myPhotos } = await supabase.from("profile_photos").select("storage_path").eq("user_id", me.id).order("position").limit(1);
+  const urls = await signPhotoPaths(supabase, [...ranked.flatMap((c) => c.photo_paths), ...(myPhotos ?? []).map((p) => p.storage_path)]);
+  const myPhoto = myPhotos?.[0] ? urls[myPhotos[0].storage_path] ?? null : null;
   const cards: DeckCard[] = ranked.map((c) => ({
     profile: { ...c, photos: c.photo_paths.map((p) => urls[p]).filter(Boolean) },
     compatibility: { score: c.compatibility.score, reasons: c.compatibility.reasons },
@@ -69,13 +71,13 @@ export default async function DiscoverPage({ params }: PageProps<"/[locale]/disc
 
   return (
     <>
-      <PageHeader title={t("title")} subtitle={t("subtitle")} />
+      <PageHeader title={t("title")} subtitle={t("subtitle")} className="mb-4 [&_h1]:text-[2.4rem] sm:[&_h1]:text-6xl [&_p]:hidden sm:[&_p]:block" />
       {cards.length === 0 ? (
         <EmptyState icon={<Compass />} title={t("emptyTitle")} text={t("emptyText")}>
           <Link href="/settings/profile#preferences" className={buttonVariants({ variant: "outline" })}>{t("editPreferences")}</Link>
         </EmptyState>
       ) : (
-        <DiscoverDeck cards={cards} />
+        <DiscoverDeck cards={cards} myPhoto={myPhoto} />
       )}
     </>
   );
