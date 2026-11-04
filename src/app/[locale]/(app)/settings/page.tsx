@@ -88,7 +88,7 @@ export default async function SettingsPage({ params }: PageProps<"/[locale]/sett
       </Group>
 
       <VisibilitySettings isHidden={me.is_hidden} notifyLikes={me.notify_likes} />
-      <VerificationCard userId={me.id} status={me.verification} />
+      <VerificationCard status={me.verification} />
 
       <Group title={t("privacy")}>
         <a href="/api/account/export" download className="flex items-center gap-3.5 px-4 py-3.5 transition hover:bg-ink/[0.03]">

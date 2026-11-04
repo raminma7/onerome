@@ -140,7 +140,32 @@ Until the keys are set, the billing page clearly shows "service not configured".
    ```
 In-app notifications work without any of this. Push is an additional channel.
 
-### 4. Venue bookings
+### 4. Face verification (AWS Rekognition)
+A profile is **invisible to everyone else until the user passes face verification**. Unverified users can only browse
+Discover (no likes, no matches, no connections). The flow:
+
+1. **Cover photo check** — `DetectFaces`: exactly one clear face (confidence, size, sharpness, brightness).
+2. **Live selfie** — AWS **Face Liveness** in the browser (`@aws-amplify/ui-react-liveness`), which rejects photos,
+   screens, masks and video injection. The browser gets 15-minute STS credentials limited to
+   `rekognition:StartFaceLivenessSession`; long-lived keys never leave the server.
+3. **Face match** — `CompareFaces` between the liveness reference image and the cover photo (default ≥ 90% similarity).
+4. Pass → `profiles.verification = 'verified'` + `verified_photo_id`; the profile becomes visible.
+   Deleting the verified photo automatically removes the verification.
+
+No biometric data is stored: only outcome and scores (`face_verifications`). Separate explicit consent (`consents.kind =
+'biometric'`) is recorded first. Max 5 attempts/day. If automatic verification is unavailable, users can request a
+**manual review** (Admin → Verifications).
+
+Setup:
+1. In IAM create a role (e.g. `OneRomeLivenessBrowser`) with an inline policy allowing
+   `rekognition:StartFaceLivenessSession`, trusted by the server IAM user. Set `AWS_LIVENESS_ROLE_ARN`.
+2. Create an IAM user for the server with `rekognition:CreateFaceLivenessSession`, `rekognition:GetFaceLivenessSessionResults`,
+   `rekognition:CompareFaces`, `rekognition:DetectFaces` and `sts:AssumeRole` on the role above. Set `AWS_ACCESS_KEY_ID`
+   and `AWS_SECRET_ACCESS_KEY` (server only).
+3. Set `AWS_REKOGNITION_REGION` to an EU region that supports Face Liveness (e.g. `eu-west-1`).
+4. Sign a DPA with AWS and update the privacy policy/DPIA (biometric processing requires a DPIA under GDPR art. 35).
+
+### 5. Venue bookings
 Venues are managed from **Admin → Venues**. A First Date booking is only ever a *request* (`booking_requests`)
 until an admin or venue confirms it in **Admin → Bookings**. Discounts can only be set on venues marked as
 partners, which requires a real agreement.
@@ -153,6 +178,7 @@ partners, which requires a real agreement.
 | --- | --- |
 | Supabase Auth / DB / Storage / Realtime / Cron | Implemented and tested locally |
 | Stripe Checkout, Portal, Webhook | Implemented; webhook covered by unit tests. **Needs real test-mode keys to verify end-to-end** |
+| Face verification (AWS Rekognition) | Implemented; decision logic and server flow covered by tests with AWS mocked. **Needs AWS keys to verify end-to-end** |
 | Web Push (Edge Function) | Implemented; **needs VAPID keys and deployment** to verify |
 | Venue booking system | Admin-confirmed requests only; no external booking API connected |
 | Legal texts (privacy, terms) | **Drafts**: must be reviewed by a qualified lawyer before launch |

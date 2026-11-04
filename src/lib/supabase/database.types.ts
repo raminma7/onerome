@@ -285,6 +285,38 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"face_verifications": {
+                  Row: {
+                    "completed_at": string | null,"created_at": string,"failure_reason": string | null,"id": string,"liveness_confidence": number | null,"liveness_session_id": string | null,"photo_id": string | null,"provider": string,"similarity": number | null,"status": Database["public"]['Enums']["face_verification_status"],"user_id": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "completed_at"?: string | null,"created_at"?: string,"failure_reason"?: string | null,"id"?: string,"liveness_confidence"?: number | null,"liveness_session_id"?: string | null,"photo_id"?: string | null,"provider"?: string,"similarity"?: number | null,"status"?: Database["public"]['Enums']["face_verification_status"],"user_id": string
+                  }
+                  Update: {
+                    "completed_at"?: string | null,"created_at"?: string,"failure_reason"?: string | null,"id"?: string,"liveness_confidence"?: number | null,"liveness_session_id"?: string | null,"photo_id"?: string | null,"provider"?: string,"similarity"?: number | null,"status"?: Database["public"]['Enums']["face_verification_status"],"user_id"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "face_verifications_photo_id_fkey"
+      columns: ["photo_id"]
+isOneToOne: false
+      referencedRelation: "profile_photos"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "face_verifications_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "profiles"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "face_verifications_user_id_fkey"
+      columns: ["user_id"]
+isOneToOne: false
+      referencedRelation: "public_profiles"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"likes": {
                   Row: {
                     "created_at": string,"from_user": string,"to_user": string
@@ -525,14 +557,14 @@ isOneToOne: false
                   ]
                 },"profiles": {
                   Row: {
-                    "bio": string | null,"birth_date": string | null,"core_values": (string)[],"created_at": string,"deleted_at": string | null,"display_name": string | null,"education": string | null,"gender": Database["public"]['Enums']["gender"] | null,"id": string,"interests": (string)[],"is_hidden": boolean,"languages": (string)[],"last_active_at": string,"lifestyle": NonNullable<Json>,"locale": Database["public"]['Enums']["app_locale"],"neighborhood": string | null,"notify_likes": boolean,"occupation": string | null,"onboarding_completed_at": string | null,"personality": (string)[],"relationship_goal": Database["public"]['Enums']["relationship_goal"] | null,"role": Database["public"]['Enums']["user_role"],"suspended_at": string | null,"suspension_reason": string | null,"updated_at": string,"verification": Database["public"]['Enums']["verification_status"]
+                    "bio": string | null,"birth_date": string | null,"core_values": (string)[],"created_at": string,"deleted_at": string | null,"display_name": string | null,"education": string | null,"gender": Database["public"]['Enums']["gender"] | null,"id": string,"interests": (string)[],"is_hidden": boolean,"languages": (string)[],"last_active_at": string,"lifestyle": NonNullable<Json>,"locale": Database["public"]['Enums']["app_locale"],"neighborhood": string | null,"notify_likes": boolean,"occupation": string | null,"onboarding_completed_at": string | null,"personality": (string)[],"relationship_goal": Database["public"]['Enums']["relationship_goal"] | null,"role": Database["public"]['Enums']["user_role"],"suspended_at": string | null,"suspension_reason": string | null,"updated_at": string,"verification": Database["public"]['Enums']["verification_status"],"verified_at": string | null,"verified_photo_id": string | null
                   }
                   ComputedFields: never
                   Insert: {
-                    "bio"?: string | null,"birth_date"?: string | null,"core_values"?: (string)[],"created_at"?: string,"deleted_at"?: string | null,"display_name"?: string | null,"education"?: string | null,"gender"?: Database["public"]['Enums']["gender"] | null,"id": string,"interests"?: (string)[],"is_hidden"?: boolean,"languages"?: (string)[],"last_active_at"?: string,"lifestyle"?: NonNullable<Json>,"locale"?: Database["public"]['Enums']["app_locale"],"neighborhood"?: string | null,"notify_likes"?: boolean,"occupation"?: string | null,"onboarding_completed_at"?: string | null,"personality"?: (string)[],"relationship_goal"?: Database["public"]['Enums']["relationship_goal"] | null,"role"?: Database["public"]['Enums']["user_role"],"suspended_at"?: string | null,"suspension_reason"?: string | null,"updated_at"?: string,"verification"?: Database["public"]['Enums']["verification_status"]
+                    "bio"?: string | null,"birth_date"?: string | null,"core_values"?: (string)[],"created_at"?: string,"deleted_at"?: string | null,"display_name"?: string | null,"education"?: string | null,"gender"?: Database["public"]['Enums']["gender"] | null,"id": string,"interests"?: (string)[],"is_hidden"?: boolean,"languages"?: (string)[],"last_active_at"?: string,"lifestyle"?: NonNullable<Json>,"locale"?: Database["public"]['Enums']["app_locale"],"neighborhood"?: string | null,"notify_likes"?: boolean,"occupation"?: string | null,"onboarding_completed_at"?: string | null,"personality"?: (string)[],"relationship_goal"?: Database["public"]['Enums']["relationship_goal"] | null,"role"?: Database["public"]['Enums']["user_role"],"suspended_at"?: string | null,"suspension_reason"?: string | null,"updated_at"?: string,"verification"?: Database["public"]['Enums']["verification_status"],"verified_at"?: string | null,"verified_photo_id"?: string | null
                   }
                   Update: {
-                    "bio"?: string | null,"birth_date"?: string | null,"core_values"?: (string)[],"created_at"?: string,"deleted_at"?: string | null,"display_name"?: string | null,"education"?: string | null,"gender"?: Database["public"]['Enums']["gender"] | null,"id"?: string,"interests"?: (string)[],"is_hidden"?: boolean,"languages"?: (string)[],"last_active_at"?: string,"lifestyle"?: NonNullable<Json>,"locale"?: Database["public"]['Enums']["app_locale"],"neighborhood"?: string | null,"notify_likes"?: boolean,"occupation"?: string | null,"onboarding_completed_at"?: string | null,"personality"?: (string)[],"relationship_goal"?: Database["public"]['Enums']["relationship_goal"] | null,"role"?: Database["public"]['Enums']["user_role"],"suspended_at"?: string | null,"suspension_reason"?: string | null,"updated_at"?: string,"verification"?: Database["public"]['Enums']["verification_status"]
+                    "bio"?: string | null,"birth_date"?: string | null,"core_values"?: (string)[],"created_at"?: string,"deleted_at"?: string | null,"display_name"?: string | null,"education"?: string | null,"gender"?: Database["public"]['Enums']["gender"] | null,"id"?: string,"interests"?: (string)[],"is_hidden"?: boolean,"languages"?: (string)[],"last_active_at"?: string,"lifestyle"?: NonNullable<Json>,"locale"?: Database["public"]['Enums']["app_locale"],"neighborhood"?: string | null,"notify_likes"?: boolean,"occupation"?: string | null,"onboarding_completed_at"?: string | null,"personality"?: (string)[],"relationship_goal"?: Database["public"]['Enums']["relationship_goal"] | null,"role"?: Database["public"]['Enums']["user_role"],"suspended_at"?: string | null,"suspension_reason"?: string | null,"updated_at"?: string,"verification"?: Database["public"]['Enums']["verification_status"],"verified_at"?: string | null,"verified_photo_id"?: string | null
                   }
                   Relationships: [
                     {
@@ -541,6 +573,12 @@ isOneToOne: false
 isOneToOne: false
       referencedRelation: "neighborhoods"
       referencedColumns: ["slug"]
+    },{
+      foreignKeyName: "profiles_verified_photo_id_fkey"
+      columns: ["verified_photo_id"]
+isOneToOne: false
+      referencedRelation: "profile_photos"
+      referencedColumns: ["id"]
     }
                   ]
                 },"push_subscriptions": {
@@ -962,7 +1000,7 @@ isOneToOne: false
                            }
           }
           Enums: {
-            "app_locale": "it"|"en","booking_mode": "none"|"request","booking_status": "requested"|"confirmed"|"declined"|"cancelled","connection_end_reason": "manual"|"timeout"|"block"|"report"|"account_deleted"|"admin","connection_status": "active"|"closed","consent_kind": "terms"|"privacy"|"sensitive_data"|"marketing","date_plan_status": "opt_in"|"planning"|"confirmed"|"cancelled","gender": "woman"|"man"|"non_binary","match_status": "active"|"closed","notification_type": "like_received"|"mutual_match"|"connection_started"|"new_message"|"inactivity_reminder"|"connection_ended"|"first_date_update"|"booking_status"|"subscription_status"|"verification_status","relationship_goal": "long_term"|"marriage"|"open"|"figuring_out","report_reason": "spam"|"fake_profile"|"harassment"|"inappropriate_content"|"underage"|"scam"|"other","report_status": "open"|"reviewing"|"actioned"|"dismissed","subscription_status": "incomplete"|"incomplete_expired"|"trialing"|"active"|"past_due"|"canceled"|"unpaid"|"paused","user_role": "user"|"admin","venue_category": "cafe"|"restaurant"|"wine_bar"|"gelateria"|"culture"|"park"|"experience","verification_status": "unverified"|"pending"|"verified"|"rejected"
+            "app_locale": "it"|"en","booking_mode": "none"|"request","booking_status": "requested"|"confirmed"|"declined"|"cancelled","connection_end_reason": "manual"|"timeout"|"block"|"report"|"account_deleted"|"admin","connection_status": "active"|"closed","consent_kind": "terms"|"privacy"|"sensitive_data"|"marketing"|"biometric","date_plan_status": "opt_in"|"planning"|"confirmed"|"cancelled","face_verification_status": "started"|"passed"|"failed"|"error","gender": "woman"|"man"|"non_binary","match_status": "active"|"closed","notification_type": "like_received"|"mutual_match"|"connection_started"|"new_message"|"inactivity_reminder"|"connection_ended"|"first_date_update"|"booking_status"|"subscription_status"|"verification_status","relationship_goal": "long_term"|"marriage"|"open"|"figuring_out","report_reason": "spam"|"fake_profile"|"harassment"|"inappropriate_content"|"underage"|"scam"|"other","report_status": "open"|"reviewing"|"actioned"|"dismissed","subscription_status": "incomplete"|"incomplete_expired"|"trialing"|"active"|"past_due"|"canceled"|"unpaid"|"paused","user_role": "user"|"admin","venue_category": "cafe"|"restaurant"|"wine_bar"|"gelateria"|"culture"|"park"|"experience","verification_status": "unverified"|"pending"|"verified"|"rejected"
           }
           CompositeTypes: {
             [_ in never]: never
@@ -1078,7 +1116,7 @@ export type CompositeTypes<
 export const Constants = {
   "public": {
           Enums: {
-            "app_locale": ["it", "en"],"booking_mode": ["none", "request"],"booking_status": ["requested", "confirmed", "declined", "cancelled"],"connection_end_reason": ["manual", "timeout", "block", "report", "account_deleted", "admin"],"connection_status": ["active", "closed"],"consent_kind": ["terms", "privacy", "sensitive_data", "marketing"],"date_plan_status": ["opt_in", "planning", "confirmed", "cancelled"],"gender": ["woman", "man", "non_binary"],"match_status": ["active", "closed"],"notification_type": ["like_received", "mutual_match", "connection_started", "new_message", "inactivity_reminder", "connection_ended", "first_date_update", "booking_status", "subscription_status", "verification_status"],"relationship_goal": ["long_term", "marriage", "open", "figuring_out"],"report_reason": ["spam", "fake_profile", "harassment", "inappropriate_content", "underage", "scam", "other"],"report_status": ["open", "reviewing", "actioned", "dismissed"],"subscription_status": ["incomplete", "incomplete_expired", "trialing", "active", "past_due", "canceled", "unpaid", "paused"],"user_role": ["user", "admin"],"venue_category": ["cafe", "restaurant", "wine_bar", "gelateria", "culture", "park", "experience"],"verification_status": ["unverified", "pending", "verified", "rejected"]
+            "app_locale": ["it", "en"],"booking_mode": ["none", "request"],"booking_status": ["requested", "confirmed", "declined", "cancelled"],"connection_end_reason": ["manual", "timeout", "block", "report", "account_deleted", "admin"],"connection_status": ["active", "closed"],"consent_kind": ["terms", "privacy", "sensitive_data", "marketing", "biometric"],"date_plan_status": ["opt_in", "planning", "confirmed", "cancelled"],"face_verification_status": ["started", "passed", "failed", "error"],"gender": ["woman", "man", "non_binary"],"match_status": ["active", "closed"],"notification_type": ["like_received", "mutual_match", "connection_started", "new_message", "inactivity_reminder", "connection_ended", "first_date_update", "booking_status", "subscription_status", "verification_status"],"relationship_goal": ["long_term", "marriage", "open", "figuring_out"],"report_reason": ["spam", "fake_profile", "harassment", "inappropriate_content", "underage", "scam", "other"],"report_status": ["open", "reviewing", "actioned", "dismissed"],"subscription_status": ["incomplete", "incomplete_expired", "trialing", "active", "past_due", "canceled", "unpaid", "paused"],"user_role": ["user", "admin"],"venue_category": ["cafe", "restaurant", "wine_bar", "gelateria", "culture", "park", "experience"],"verification_status": ["unverified", "pending", "verified", "rejected"]
           }
         }
 } as const

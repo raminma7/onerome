@@ -77,7 +77,7 @@ export default async function DiscoverPage({ params }: PageProps<"/[locale]/disc
           <Link href="/settings/profile#preferences" className={buttonVariants({ variant: "outline" })}>{t("editPreferences")}</Link>
         </EmptyState>
       ) : (
-        <DiscoverDeck cards={cards} myPhoto={myPhoto} />
+        <DiscoverDeck cards={cards} myPhoto={myPhoto} canLike={me.verification === "verified"} />
       )}
     </>
   );

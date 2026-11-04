@@ -39,6 +39,7 @@ export function OnboardingWizard(props: {
   const t = useTranslations("onboarding");
   const v = useTranslations("validation");
   const c = useTranslations("common");
+  const tv = useTranslations("verify");
   const errorText = useErrorText();
   const storageKey = `onerome.onboarding.${props.userId}`;
 
@@ -117,7 +118,7 @@ export function OnboardingWizard(props: {
       return;
     }
     sessionStorage.removeItem(storageKey);
-    window.location.assign(window.location.pathname.replace(/\/onboarding$/, "/discover"));
+    window.location.assign(window.location.pathname.replace(/\/onboarding$/, "/verify"));
   }
 
   const intro = useMemo(
@@ -150,6 +151,7 @@ export function OnboardingWizard(props: {
           {step === "basics" && <BasicsFields value={draft.profile} onChange={setProfile} errors={errors} />}
           {step === "photos" && (
             <>
+              <Notice className="mb-5">{tv("photoHint")}</Notice>
               <PhotoManager userId={props.userId} initial={props.photos} onChange={setPhotoCount} />
               {errors.photos && <Notice tone="danger" className="mt-4">{errorText("photo_required")}</Notice>}
             </>

@@ -580,7 +580,8 @@
       "subscription_canceled": "Il tuo abbonamento è terminato.",
       "subscription_other": "Lo stato del tuo abbonamento è cambiato.",
       "verification_verified": "Il tuo profilo è ora verificato.",
-      "verification_rejected": "Non siamo riusciti a verificare il tuo profilo. Puoi riprovare."
+      "verification_rejected": "Non siamo riusciti a verificare il tuo profilo. Puoi riprovare.",
+      "verification_unverified": "La foto verificata è stata rimossa: verifica di nuovo per restare visibile."
     }
   },
   "settings": {
@@ -773,7 +774,15 @@
     "email_taken": "Esiste già un account con questa email.",
     "weak_password": "La password è troppo debole.",
     "service_unavailable": "Questo servizio non è disponibile al momento.",
-    "upload_failed": "Caricamento non riuscito. Riprova."
+    "upload_failed": "Caricamento non riuscito. Riprova.",
+    "verification_required": "Verifica la tua identità per mettere like e fare match. Fino ad allora il tuo profilo resta nascosto.",
+    "verification_unavailable": "La verifica del volto non è disponibile ora. Riprova più tardi o richiedi una revisione manuale.",
+    "verification_session_invalid": "La sessione di verifica è scaduta. Ricomincia.",
+    "photo_no_face": "Non troviamo un volto nella foto di copertina. Usa una tua foto nitida.",
+    "photo_multiple_faces": "Nella foto di copertina c'è più di una persona. Usa una foto solo tua.",
+    "photo_unclear": "La foto di copertina è sfocata, scura o troppo lontana. Usa un primo piano nitido e ben illuminato.",
+    "liveness_failed": "Non siamo riusciti a confermare il selfie dal vivo. Buona luce, guarda la fotocamera e riprova.",
+    "face_mismatch": "Il selfie dal vivo non corrisponde alla foto di copertina. Usa una tua foto recente e reale."
   },
   "validation": {
     "required": "Obbligatorio",
@@ -786,5 +795,40 @@
     "minInterests": "Scegline almeno 3",
     "chooseOne": "Scegline almeno uno",
     "ageRange": "Controlla l'intervallo di età"
+  },
+  "verify": {
+    "title": "Verifica la tua identità",
+    "subtitle": "Un selfie dal vivo, confrontato con la tua foto di copertina. Ci vogliono 30 secondi.",
+    "hiddenBanner": "Il tuo profilo è nascosto finché non verifichi il tuo volto.",
+    "hiddenBannerCta": "Verifica ora",
+    "whyTitle": "Perché verifichiamo tutti",
+    "why1": "Ogni profilo che vedi appartiene a una persona reale che corrisponde alle sue foto.",
+    "why2": "Profili falsi e catfishing vengono fermati sul nascere.",
+    "why3": "Il tuo profilo diventa visibile solo dopo una verifica riuscita.",
+    "stepPhoto": "Foto di copertina nitida",
+    "stepPhotoText": "Un solo volto, nitido e ben illuminato.",
+    "stepSelfie": "Selfie dal vivo",
+    "stepSelfieText": "Segui l'ovale sullo schermo; un breve controllo di luce prova che sei davvero tu, dal vivo.",
+    "stepMatch": "Confronto del volto",
+    "stepMatchText": "Confrontiamo il selfie con la tua foto di copertina.",
+    "consent": "Acconsento al trattamento da parte di OneRome e del suo responsabile Amazon Web Services (UE) delle immagini del mio volto per verificare la mia identità (dati biometrici, art. 9 GDPR). Il selfie e i dati del volto non vengono conservati: si conserva solo l'esito. Posso revocare eliminando l'account.",
+    "start": "Inizia la verifica",
+    "starting": "Preparazione…",
+    "checking": "Stiamo verificando il tuo volto…",
+    "successTitle": "Sei verificato/a!",
+    "successText": "Il tuo profilo è ora visibile alle persone compatibili a Roma.",
+    "toDiscover": "Inizia a scoprire",
+    "retry": "Riprova",
+    "failedTitle": "Verifica non riuscita",
+    "changePhoto": "Cambia foto di copertina",
+    "verifiedTitle": "Identità verificata",
+    "verifiedText": "Verificato il {date}. Il tuo profilo è visibile agli altri.",
+    "unavailableTitle": "Verifica automatica non disponibile",
+    "manualTitle": "Problemi con il controllo automatico?",
+    "manualText": "Carica un selfie mentre tieni un foglio con scritto \"OneRome\". Un moderatore lo confronterà con le tue foto.",
+    "manualCta": "Richiedi revisione manuale",
+    "manualPending": "Revisione manuale richiesta. Ti avviseremo.",
+    "browseOnly": "Puoi esplorare, ma per mettere like devi verificare la tua identità.",
+    "photoHint": "La foto di copertina deve mostrare chiaramente il tuo volto: verrà confrontata con un selfie dal vivo."
   }
 }

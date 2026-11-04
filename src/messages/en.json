@@ -580,7 +580,8 @@
       "subscription_canceled": "Your subscription has ended.",
       "subscription_other": "Your subscription status changed.",
       "verification_verified": "Your profile is now verified.",
-      "verification_rejected": "We couldn't verify your profile. You can try again."
+      "verification_rejected": "We couldn't verify your profile. You can try again.",
+      "verification_unverified": "Your verified photo was removed: verify again to stay visible."
     }
   },
   "settings": {
@@ -773,7 +774,15 @@
     "email_taken": "An account with this email already exists.",
     "weak_password": "The password is too weak.",
     "service_unavailable": "This service is not available right now.",
-    "upload_failed": "Upload failed. Please try again."
+    "upload_failed": "Upload failed. Please try again.",
+    "verification_required": "Verify your identity to like and match. Until then your profile stays hidden.",
+    "verification_unavailable": "Face verification is not available right now. Try again later or request a manual review.",
+    "verification_session_invalid": "The verification session has expired. Please start again.",
+    "photo_no_face": "We can't find a face in your cover photo. Use a clear photo of yourself.",
+    "photo_multiple_faces": "Your cover photo shows more than one person. Use a photo of just you.",
+    "photo_unclear": "Your cover photo is too blurry, dark or far away. Use a sharp, well-lit close-up.",
+    "liveness_failed": "We couldn't confirm the live selfie. Good light, face the camera, and try again.",
+    "face_mismatch": "The live selfie doesn't match your cover photo. Use a recent, real photo of yourself."
   },
   "validation": {
     "required": "Required",
@@ -786,5 +795,40 @@
     "minInterests": "Choose at least 3",
     "chooseOne": "Choose at least one",
     "ageRange": "Check the age range"
+  },
+  "verify": {
+    "title": "Verify your identity",
+    "subtitle": "One live selfie, compared with your cover photo. It takes 30 seconds.",
+    "hiddenBanner": "Your profile is hidden until you verify your face.",
+    "hiddenBannerCta": "Verify now",
+    "whyTitle": "Why we verify everyone",
+    "why1": "Every profile you see belongs to a real person who matches their photos.",
+    "why2": "Fake accounts and catfishing are stopped before they start.",
+    "why3": "Your profile becomes visible only after a successful match.",
+    "stepPhoto": "Clear cover photo",
+    "stepPhotoText": "Exactly one face, sharp and well lit.",
+    "stepSelfie": "Live selfie",
+    "stepSelfieText": "Follow the oval on screen; a short light check proves it's really you, live.",
+    "stepMatch": "Face match",
+    "stepMatchText": "We compare the selfie with your cover photo.",
+    "consent": "I consent to OneRome and its processor Amazon Web Services (EU) processing images of my face to verify my identity (biometric data, GDPR art. 9). The selfie and the facial data are not stored: only the result is kept. I can withdraw by deleting my account.",
+    "start": "Start verification",
+    "starting": "Preparing…",
+    "checking": "Checking your face…",
+    "successTitle": "You're verified!",
+    "successText": "Your profile is now visible to compatible people in Rome.",
+    "toDiscover": "Start discovering",
+    "retry": "Try again",
+    "failedTitle": "Verification failed",
+    "changePhoto": "Change cover photo",
+    "verifiedTitle": "Identity verified",
+    "verifiedText": "Verified on {date}. Your profile is visible to others.",
+    "unavailableTitle": "Automatic verification unavailable",
+    "manualTitle": "Problems with the automatic check?",
+    "manualText": "Upload a selfie holding a sheet with the word \"OneRome\". A moderator will compare it with your photos.",
+    "manualCta": "Request manual review",
+    "manualPending": "Manual review requested. We'll notify you.",
+    "browseOnly": "You can browse, but you need to verify your identity to like.",
+    "photoHint": "Your cover photo must clearly show your face: it will be compared with a live selfie."
   }
 }

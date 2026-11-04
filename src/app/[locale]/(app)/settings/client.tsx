@@ -1,17 +1,15 @@
 "use client";
-import { BadgeCheck, Bell, Camera, EyeOff, Trash2 } from "lucide-react";
+import { BadgeCheck, Bell, EyeOff, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRef, useState } from "react";
-import { toast } from "sonner";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { IconTile, Notice } from "@/components/ui/card";
+import { IconTile } from "@/components/ui/card";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
-import { useRouter } from "@/i18n/navigation";
-import { getBrowserClient } from "@/lib/supabase/client";
-import { useAction, useErrorText } from "@/lib/use-action";
-import { deleteAccountAction, requestVerificationAction, updateVisibilityAction } from "@/server/actions/settings";
+import { Link, useRouter } from "@/i18n/navigation";
+import { useAction } from "@/lib/use-action";
+import { deleteAccountAction, updateVisibilityAction } from "@/server/actions/settings";
 
 export function VisibilitySettings({ isHidden, notifyLikes }: { isHidden: boolean; notifyLikes: boolean }) {
   const t = useTranslations("settings");
@@ -40,45 +38,19 @@ export function VisibilitySettings({ isHidden, notifyLikes }: { isHidden: boolea
   );
 }
 
-export function VerificationCard({ userId, status }: { userId: string; status: string }) {
+export function VerificationCard({ status }: { status: string }) {
   const t = useTranslations("settings");
-  const errorText = useErrorText();
-  const [current, setCurrent] = useState(status);
-  const [busy, setBusy] = useState(false);
-  const input = useRef<HTMLInputElement>(null);
-
-  async function upload(file: File | undefined) {
-    if (!file) return;
-    setBusy(true);
-    const ext = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
-    const path = `${userId}/${crypto.randomUUID()}.${ext}`;
-    const { error } = await getBrowserClient().storage.from("verification").upload(path, file, { contentType: file.type });
-    if (error) {
-      toast.error(errorText("upload_failed"));
-    } else {
-      const result = await requestVerificationAction(path);
-      if (result.ok) setCurrent("pending");
-      else toast.error(errorText(result.error));
-    }
-    setBusy(false);
-  }
-
+  const tv = useTranslations("verify");
+  const verified = status === "verified";
   return (
-    <section className="space-y-3 rounded-[1.75rem] bg-white/85 p-5 shadow-soft ring-1 ring-white">
-      <h2 className="flex items-center gap-3 text-[1.7rem]"><IconTile className="bg-sky-500"><BadgeCheck /></IconTile>{t("verification")}</h2>
-      {current === "verified" ? (
-        <Notice tone="success">{t("verificationDone")}</Notice>
-      ) : current === "pending" ? (
-        <Notice>{t("verificationPending")}</Notice>
-      ) : (
-        <>
-          {current === "rejected" && <Notice tone="warning">{t("verificationRejected")}</Notice>}
-          <p className="text-sm text-muted">{t("verificationText")}</p>
-          <Button variant="outline" loading={busy} onClick={() => input.current?.click()}><Camera /> {t("uploadSelfie")}</Button>
-          <input ref={input} type="file" accept="image/jpeg,image/png,image/webp" capture="user" hidden onChange={(e) => upload(e.target.files?.[0])} />
-        </>
-      )}
-    </section>
+    <Link href="/verify" className="flex items-center gap-3.5 rounded-[1.75rem] bg-white/85 p-4 shadow-soft ring-1 ring-white transition hover:-translate-y-0.5">
+      <IconTile className={verified ? "bg-sky-500" : "bg-brand"}><BadgeCheck /></IconTile>
+      <span className="flex-1">
+        <span className="block text-[15px] font-semibold">{t("verification")}</span>
+        <span className="block text-xs text-muted">{verified ? tv("verifiedTitle") : tv("hiddenBanner")}</span>
+      </span>
+      {!verified && <span className="bg-brand rounded-full px-3 py-1.5 text-xs font-semibold text-white">{tv("hiddenBannerCta")}</span>}
+    </Link>
   );
 }
 

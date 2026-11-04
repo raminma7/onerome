@@ -34,7 +34,11 @@ begin
       bio = 'Profilo demo per lo sviluppo locale.', onboarding_completed_at = now()
     where id = v_id;
     update public.preferences set interested_in = r.interested, age_min = 25, age_max = 45 where user_id = v_id;
-    insert into public.profile_photos (user_id, storage_path) values (v_id, v_id::text || '/demo.webp') on conflict do nothing;
+    insert into public.profile_photos (user_id, storage_path) values (v_id, v_id::text || '/demo.jpg') on conflict do nothing;
+    -- Demo accounts are marked verified so they are visible locally (real users must pass face verification).
+    update public.profiles set verification = 'verified', verified_at = now(),
+      verified_photo_id = (select id from public.profile_photos where user_id = v_id order by position limit 1)
+    where id = v_id;
     insert into public.consents (user_id, kind, version, granted) values (v_id, 'terms', 'dev', true), (v_id, 'sensitive_data', 'dev', true);
   end loop;
   -- Giulia is an admin in the local demo.

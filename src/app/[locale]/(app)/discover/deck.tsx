@@ -11,7 +11,7 @@ import {
 } from "@/components/profile/profile-view";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { useErrorText } from "@/lib/use-action";
 import { cn } from "@/lib/utils";
 import { likeAction, passAction } from "@/server/actions/matching";
@@ -20,7 +20,7 @@ export type DeckCard = { profile: ProfileViewData; compatibility: CompatibilityV
 
 const SWIPE = 110;
 
-export function DiscoverDeck({ cards, myPhoto }: { cards: DeckCard[]; myPhoto?: string | null }) {
+export function DiscoverDeck({ cards, myPhoto, canLike = true }: { cards: DeckCard[]; myPhoto?: string | null; canLike?: boolean }) {
   const t = useTranslations("discover");
   const errorText = useErrorText();
   const [index, setIndex] = useState(0);
@@ -35,8 +35,17 @@ export function DiscoverDeck({ cards, myPhoto }: { cards: DeckCard[]; myPhoto?: 
   const card = cards[index];
   const next = cards[index + 1];
 
+  const tv = useTranslations("verify");
+  const router = useRouter();
+
   async function act(kind: "like" | "pass") {
     if (!card || busy) return;
+    if (kind === "like" && !canLike) {
+      // Browse-only until the face verification succeeds.
+      animate(x, 0, { type: "spring", bounce: 0.35 });
+      toast(tv("browseOnly"), { action: { label: tv("hiddenBannerCta"), onClick: () => router.push("/verify") } });
+      return;
+    }
     setBusy(true);
     const fly = animate(x, kind === "like" ? 600 : -600, { duration: 0.35, ease: [0.22, 1, 0.36, 1] });
     const result = kind === "like" ? await likeAction(card.profile.id) : await passAction(card.profile.id);

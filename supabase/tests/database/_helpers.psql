@@ -8,7 +8,8 @@ create or replace function tests.create_user(
   p_gender public.gender,
   p_interested public.gender[],
   p_birth date default date '1995-05-20',
-  p_onboarded boolean default true
+  p_onboarded boolean default true,
+  p_verified boolean default true
 )
 returns uuid
 language plpgsql
@@ -27,6 +28,12 @@ begin
   where id = v_id;
   update public.preferences set interested_in = p_interested where user_id = v_id;
   insert into public.profile_photos (user_id, storage_path) values (v_id, v_id::text || '/1.webp');
+  if p_verified then
+    update public.profiles
+    set verification = 'verified', verified_at = now(),
+        verified_photo_id = (select id from public.profile_photos where user_id = v_id limit 1)
+    where id = v_id;
+  end if;
   return v_id;
 end;
 $$;
