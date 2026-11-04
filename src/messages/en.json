@@ -782,7 +782,9 @@
     "photo_multiple_faces": "Your cover photo shows more than one person. Use a photo of just you.",
     "photo_unclear": "Your cover photo is too blurry, dark or far away. Use a sharp, well-lit close-up.",
     "liveness_failed": "We couldn't confirm the live selfie. Good light, face the camera, and try again.",
-    "face_mismatch": "The live selfie doesn't match your cover photo. Use a recent, real photo of yourself."
+    "face_mismatch": "The live selfie doesn't match your cover photo. Use a recent, real photo of yourself.",
+    "photo_not_you": "This photo doesn't seem to show you. Only photos of yourself (alone or with others), places or things are allowed.",
+    "cover_must_be_you": "The cover must be a clear photo of just you."
   },
   "validation": {
     "required": "Required",
@@ -829,6 +831,17 @@
     "manualCta": "Request manual review",
     "manualPending": "Manual review requested. We'll notify you.",
     "browseOnly": "You can browse, but you need to verify your identity to like.",
-    "photoHint": "Your cover photo must clearly show your face: it will be compared with a live selfie."
+    "photoHint": "Your cover photo must clearly show your face: it will be compared with a live selfie.",
+    "photoStatus": {
+      "solo": "Verified · cover ok",
+      "with_others": "With others · not as cover",
+      "unclear": "Not clear enough for the cover",
+      "no_face": "No face · not as cover",
+      "reviewed": "Reviewed",
+      "mismatch": "Not you · hidden",
+      "unchecked": "Waiting for check · hidden"
+    },
+    "coverRule": "The cover must show only you, clearly: it's what people see first.",
+    "coverInvalidBanner": "Your profile is hidden: choose a cover photo that clearly shows only you."
   }
 }

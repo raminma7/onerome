@@ -782,7 +782,9 @@
     "photo_multiple_faces": "Nella foto di copertina c'è più di una persona. Usa una foto solo tua.",
     "photo_unclear": "La foto di copertina è sfocata, scura o troppo lontana. Usa un primo piano nitido e ben illuminato.",
     "liveness_failed": "Non siamo riusciti a confermare il selfie dal vivo. Buona luce, guarda la fotocamera e riprova.",
-    "face_mismatch": "Il selfie dal vivo non corrisponde alla foto di copertina. Usa una tua foto recente e reale."
+    "face_mismatch": "Il selfie dal vivo non corrisponde alla foto di copertina. Usa una tua foto recente e reale.",
+    "photo_not_you": "Questa foto non sembra ritrarre te. Sono ammesse solo foto tue (da solo/a o con altri), luoghi o oggetti.",
+    "cover_must_be_you": "La copertina deve essere una foto nitida solo tua."
   },
   "validation": {
     "required": "Obbligatorio",
@@ -829,6 +831,17 @@
     "manualCta": "Richiedi revisione manuale",
     "manualPending": "Revisione manuale richiesta. Ti avviseremo.",
     "browseOnly": "Puoi esplorare, ma per mettere like devi verificare la tua identità.",
-    "photoHint": "La foto di copertina deve mostrare chiaramente il tuo volto: verrà confrontata con un selfie dal vivo."
+    "photoHint": "La foto di copertina deve mostrare chiaramente il tuo volto: verrà confrontata con un selfie dal vivo.",
+    "photoStatus": {
+      "solo": "Verificata · ok come copertina",
+      "with_others": "Con altri · non come copertina",
+      "unclear": "Poco nitida per la copertina",
+      "no_face": "Senza volto · non come copertina",
+      "reviewed": "Revisionata",
+      "mismatch": "Non sei tu · nascosta",
+      "unchecked": "In attesa di controllo · nascosta"
+    },
+    "coverRule": "La copertina deve mostrare solo te, in modo nitido: è la prima cosa che gli altri vedono.",
+    "coverInvalidBanner": "Il tuo profilo è nascosto: scegli come copertina una foto nitida solo tua."
   }
 }

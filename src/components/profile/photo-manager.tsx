@@ -1,5 +1,6 @@
 "use client";
-import { ImagePlus, Star, Trash2 } from "lucide-react";
+import { BadgeCheck, EyeOff, ImagePlus, Info, Star, Trash2 } from "lucide-react";
+import { canBeCover } from "@/lib/face/decision";
 import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
@@ -8,7 +9,7 @@ import { useErrorText } from "@/lib/use-action";
 import { cn } from "@/lib/utils";
 import { addPhotoAction, deletePhotoAction, reorderPhotosAction } from "@/server/actions/photos";
 
-export type ManagedPhoto = { id: string; url: string | null };
+export type ManagedPhoto = { id: string; url: string | null; status?: string | null };
 
 const MAX_PHOTOS = 6;
 const MAX_BYTES = 5 * 1024 * 1024;
@@ -25,8 +26,9 @@ async function prepareImage(file: File): Promise<Blob> {
   return new Promise((resolve, reject) => canvas.toBlob((b) => (b ? resolve(b) : reject(new Error("encode"))), "image/webp", 0.85));
 }
 
-export function PhotoManager({ userId, initial, onChange }: { userId: string; initial: ManagedPhoto[]; onChange?: (count: number) => void }) {
+export function PhotoManager({ userId, initial, onChange, verified = false }: { userId: string; initial: ManagedPhoto[]; onChange?: (count: number) => void; verified?: boolean }) {
   const t = useTranslations("onboarding");
+  const tv = useTranslations("verify");
   const errorText = useErrorText();
   const [photos, setPhotos] = useState(initial);
   const [uploading, setUploading] = useState(false);
@@ -64,7 +66,7 @@ export function PhotoManager({ userId, initial, onChange }: { userId: string; in
           toast.error(errorText(result.error));
           continue;
         }
-        current = [...current, { id: result.data.id, url: result.data.url ?? URL.createObjectURL(blob) }];
+        current = [...current, { id: result.data.id, url: result.data.url ?? URL.createObjectURL(blob), status: result.data.status }];
         update(current);
       } catch {
         toast.error(errorText("upload_failed"));
@@ -85,10 +87,18 @@ export function PhotoManager({ userId, initial, onChange }: { userId: string; in
   }
 
   async function makeCover(id: string) {
+    if (verified && !canBeCover(photos.find((p) => p.id === id)?.status)) {
+      toast.error(errorText("cover_must_be_you"));
+      return;
+    }
+    const prev = photos;
     const next = [photos.find((p) => p.id === id)!, ...photos.filter((p) => p.id !== id)];
     update(next);
     const result = await reorderPhotosAction(next.map((p) => p.id));
-    if (!result.ok) toast.error(errorText(result.error));
+    if (!result.ok) {
+      update(prev);
+      toast.error(errorText(result.error));
+    }
   }
 
   return (
@@ -97,9 +107,19 @@ export function PhotoManager({ userId, initial, onChange }: { userId: string; in
         <div key={photo.id} className={cn("group relative aspect-[3/4] overflow-hidden rounded-[1.5rem] bg-travertine shadow-soft", i === 0 && "col-span-2 row-span-2 ring-2 ring-coral ring-offset-2 ring-offset-ivory")}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           {photo.url && <img src={photo.url} alt="" className="size-full object-cover" />}
-          {i === 0 && <span className="bg-brand absolute left-2.5 top-2.5 rounded-full px-2.5 py-1 text-[11px] font-semibold text-white">{t("cover")}</span>}
+          <div className="absolute left-2.5 right-2.5 top-2.5 flex flex-col items-start gap-1">
+          {i === 0 && <span className="bg-brand rounded-full px-2.5 py-1 text-[11px] font-semibold text-white">{t("cover")}</span>}
+          {verified && photo.status && (
+            <span className={cn("flex max-w-full items-center gap-1 truncate rounded-full px-2 py-1 text-[10px] font-semibold backdrop-blur",
+              photo.status === "solo" ? "bg-sky-500/90 text-white" : ["mismatch", "unchecked"].includes(photo.status) ? "bg-danger/90 text-white" : "bg-black/50 text-white")}
+              title={tv(`photoStatus.${photo.status}` as "photoStatus.solo")}>
+              {photo.status === "solo" ? <BadgeCheck className="size-3" /> : ["mismatch", "unchecked"].includes(photo.status) ? <EyeOff className="size-3" /> : <Info className="size-3" />}
+              <span className={cn("truncate", i === 0 ? "inline" : "hidden sm:inline")}>{tv(`photoStatus.${photo.status}` as "photoStatus.solo")}</span>
+            </span>
+          )}
+          </div>
           <div className="absolute inset-x-0 bottom-0 flex justify-between gap-1 bg-gradient-to-t from-ink/60 p-2">
-            {i !== 0 ? (
+            {i !== 0 && (!verified || canBeCover(photo.status)) ? (
               <button type="button" onClick={() => makeCover(photo.id)} className="rounded-full bg-ivory/90 p-1.5 text-ink" aria-label={t("makeCover")} title={t("makeCover")}>
                 <Star className="size-3.5" />
               </button>

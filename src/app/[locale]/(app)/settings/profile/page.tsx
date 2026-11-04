@@ -13,7 +13,7 @@ export default async function EditProfilePage({ params }: PageProps<"/[locale]/s
   const supabase = await createClient();
   const [{ data: prefs }, { data: photos }, { data: neighborhoods }] = await Promise.all([
     supabase.from("preferences").select("*").eq("user_id", me.id).single(),
-    supabase.from("profile_photos").select("id, storage_path").eq("user_id", me.id).order("position"),
+    supabase.from("profile_photos").select("id, storage_path, face_status").eq("user_id", me.id).order("position"),
     supabase.from("neighborhoods").select("slug, name, zone").order("name"),
   ]);
   const urls = await signPhotoPaths(supabase, (photos ?? []).map((p) => p.storage_path));
@@ -23,7 +23,8 @@ export default async function EditProfilePage({ params }: PageProps<"/[locale]/s
       <ProfileEditor
         userId={me.id}
         neighborhoods={neighborhoods ?? []}
-        photos={(photos ?? []).map((p) => ({ id: p.id, url: urls[p.storage_path] ?? null }))}
+        photos={(photos ?? []).map((p) => ({ id: p.id, url: urls[p.storage_path] ?? null, status: p.face_status }))}
+        verified={me.verification === "verified"}
         profile={{
           display_name: me.display_name ?? "", gender: me.gender ?? "", bio: me.bio ?? "", occupation: me.occupation ?? "",
           education: me.education ?? "", neighborhood: me.neighborhood ?? "", languages: me.languages, interests: me.interests,

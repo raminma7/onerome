@@ -25,7 +25,7 @@ async function createUser(name: string, gender: string, interested: string) {
     [id, name, gender],
   );
   await admin.query(`update public.preferences set interested_in=array[$2]::public.gender[] where user_id=$1`, [id, interested]);
-  await admin.query(`insert into public.profile_photos (user_id, storage_path) values ($1::uuid, $2)`, [id, `${id}/race.webp`]);
+  await admin.query(`insert into public.profile_photos (user_id, storage_path, face_status) values ($1::uuid, $2, 'solo')`, [id, `${id}/race.webp`]);
   await admin.query(`update public.profiles set verification='verified', verified_photo_id=(select id from public.profile_photos where user_id=$1::uuid limit 1) where id=$1::uuid`, [id]);
   await admin.query(`insert into public.subscriptions (id, user_id, status, current_period_end) values ($1, $2, 'active', now() + interval '30 days')`, [`sub_race_${id}`, id]);
   return id;

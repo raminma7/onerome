@@ -35,6 +35,7 @@ begin
     where id = v_id;
     update public.preferences set interested_in = r.interested, age_min = 25, age_max = 45 where user_id = v_id;
     insert into public.profile_photos (user_id, storage_path) values (v_id, v_id::text || '/demo.jpg') on conflict do nothing;
+    update public.profile_photos set face_status = 'solo', face_checked_at = now() where user_id = v_id;
     -- Demo accounts are marked verified so they are visible locally (real users must pass face verification).
     update public.profiles set verification = 'verified', verified_at = now(),
       verified_photo_id = (select id from public.profile_photos where user_id = v_id order by position limit 1)

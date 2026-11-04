@@ -74,3 +74,21 @@ export function evaluateLiveness(l: LivenessOutcome, t: Thresholds = DEFAULT_THR
 export function evaluateMatch(similarity: number | undefined, t: Thresholds = DEFAULT_THRESHOLDS): { ok: true } | { ok: false; reason: FaceVerificationFailure } {
   return (similarity ?? 0) >= t.minSimilarity ? { ok: true } : { ok: false, reason: "face_mismatch" };
 }
+
+/** Status of a photo compared with the user's verified face (no selfie needed). */
+export type PhotoFaceStatus = "solo" | "with_others" | "unclear" | "no_face" | "mismatch";
+
+/**
+ * @param faces faces detected in the new photo
+ * @param similarity best CompareFaces similarity between the verified photo and any face in the new photo
+ */
+export function decidePhotoStatus(faces: DetectedFace[], similarity: number | undefined, t: Thresholds = DEFAULT_THRESHOLDS): PhotoFaceStatus {
+  const real = faces.filter((f) => significant(f, t));
+  if (real.length === 0) return "no_face";
+  if ((similarity ?? 0) < t.minSimilarity) return "mismatch";
+  if (real.length > 1) return "with_others";
+  return evaluatePhoto(real, t).ok ? "solo" : "unclear";
+}
+
+/** Only photos showing the user alone and clearly can be the cover. */
+export const canBeCover = (status: string | null | undefined) => status === "solo";

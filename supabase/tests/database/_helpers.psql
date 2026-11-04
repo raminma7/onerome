@@ -29,6 +29,7 @@ begin
   update public.preferences set interested_in = p_interested where user_id = v_id;
   insert into public.profile_photos (user_id, storage_path) values (v_id, v_id::text || '/1.webp');
   if p_verified then
+    update public.profile_photos set face_status = 'solo', face_checked_at = now() where user_id = v_id;
     update public.profiles
     set verification = 'verified', verified_at = now(),
         verified_photo_id = (select id from public.profile_photos where user_id = v_id limit 1)

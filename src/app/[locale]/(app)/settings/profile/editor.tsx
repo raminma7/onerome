@@ -11,10 +11,11 @@ import { Card } from "@/components/ui/card";
 import { useAction } from "@/lib/use-action";
 import { updatePreferencesAction, updateProfileAction } from "@/server/actions/settings";
 
-export function ProfileEditor(props: { userId: string; neighborhoods: Neighborhood[]; photos: ManagedPhoto[]; profile: ProfileDraft; preferences: PreferencesDraft }) {
+export function ProfileEditor(props: { userId: string; verified: boolean; neighborhoods: Neighborhood[]; photos: ManagedPhoto[]; profile: ProfileDraft; preferences: PreferencesDraft }) {
   const t = useTranslations("onboarding");
   const s = useTranslations("settings");
   const c = useTranslations("common");
+  const tv = useTranslations("verify");
   const [profile, setProfile] = useState(props.profile);
   const [prefs, setPrefs] = useState(props.preferences);
   const [run, pending] = useAction();
@@ -27,7 +28,12 @@ export function ProfileEditor(props: { userId: string; neighborhoods: Neighborho
 
   return (
     <div className="space-y-6">
-      {section(t("steps.photos"), <PhotoManager userId={props.userId} initial={props.photos} />)}
+      {section(t("steps.photos"), (
+        <>
+          {props.verified && <p className="-mt-2 text-sm text-muted">{tv("coverRule")}</p>}
+          <PhotoManager userId={props.userId} initial={props.photos} verified={props.verified} />
+        </>
+      ))}
       {section(t("steps.basics"), <BasicsFields value={profile} onChange={patch} />)}
       {section(t("steps.rome"), <RomeFields value={profile} onChange={patch} neighborhoods={props.neighborhoods} />)}
       {section(t("steps.goals"), <GoalFields value={profile} onChange={patch} />)}

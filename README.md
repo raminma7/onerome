@@ -152,7 +152,24 @@ Discover (no likes, no matches, no connections). The flow:
 4. Pass → `profiles.verification = 'verified'` + `verified_photo_id`; the profile becomes visible.
    Deleting the verified photo automatically removes the verification.
 
-No biometric data is stored: only outcome and scores (`face_verifications`). Separate explicit consent (`consents.kind =
+**Every later photo is checked automatically** against the verified photo (`DetectFaces` + `CompareFaces`, no new selfie):
+
+| `profile_photos.face_status` | Meaning | Shown to others | Can be cover |
+| --- | --- | --- | --- |
+| `solo` | only the user, clear | ✅ | ✅ |
+| `with_others` | the user with other people | ✅ | ❌ |
+| `unclear` | the user, but blurry / small / dark | ✅ | ❌ |
+| `no_face` | places, food, pets | ✅ | ❌ |
+| `reviewed` | approved by a moderator (manual path) | ✅ | ❌ |
+| `mismatch` | someone else — rejected and deleted on upload | ❌ | ❌ |
+| `unchecked` | not checked yet (e.g. service unavailable) | ❌ | ❌ |
+
+A profile is visible only if it is verified **and its cover is `solo`** (enforced in SQL by `private.cover_is_solo`).
+Users cannot set `face_status` (column-level grants). If the verified photo is deleted, verification moves to another
+`solo` photo; only when none is left does the user need a new live selfie. Photos uploaded before verification are
+checked in bulk right after the live selfie succeeds.
+
+No biometric data is stored: only outcome and scores (`face_verifications`, `profile_photos.face_similarity`). Separate explicit consent (`consents.kind =
 'biometric'`) is recorded first. Max 5 attempts/day. If automatic verification is unavailable, users can request a
 **manual review** (Admin → Verifications).
 

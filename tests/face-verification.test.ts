@@ -102,6 +102,7 @@ describe("face verification flow", () => {
     expect(await completeFaceVerificationAction("session-0000000001")).toEqual({ ok: true, data: { verified: true } });
 
     expect(db.profiles[0]).toMatchObject({ verification: "verified", verified_photo_id: "photo-1" });
+    expect(db.photos[0]).toMatchObject({ face_status: "solo", face_similarity: 98.7 });
     expect(db.verifications[0]).toMatchObject({ status: "passed", similarity: 98.7, liveness_confidence: 99 });
     expect(db.notifications[0]).toMatchObject({ type: "verification_status" });
   });

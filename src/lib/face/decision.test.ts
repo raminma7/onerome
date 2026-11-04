@@ -43,3 +43,22 @@ describe("evaluateMatch", () => {
     expect(evaluateMatch(undefined)).toEqual({ ok: false, reason: "face_mismatch" });
   });
 });
+
+import { canBeCover, decidePhotoStatus } from "./decision";
+
+describe("decidePhotoStatus", () => {
+  const tiny = { confidence: 99, boundingBox: { width: 0.03, height: 0.03 }, quality: { sharpness: 50, brightness: 50 } };
+  it("classifies photos against the verified face", () => {
+    expect(decidePhotoStatus([clearFace], 97)).toBe("solo");
+    expect(decidePhotoStatus([clearFace, { ...clearFace }], 95)).toBe("with_others");
+    expect(decidePhotoStatus([{ ...clearFace, quality: { sharpness: 4, brightness: 50 } }], 93)).toBe("unclear");
+    expect(decidePhotoStatus([], undefined)).toBe("no_face");
+    expect(decidePhotoStatus([tiny], 99)).toBe("no_face");
+    expect(decidePhotoStatus([clearFace], 35)).toBe("mismatch");
+    expect(decidePhotoStatus([clearFace, { ...clearFace }], 20)).toBe("mismatch");
+  });
+  it("only solo photos can be the cover", () => {
+    expect(canBeCover("solo")).toBe(true);
+    for (const s of ["with_others", "unclear", "no_face", "reviewed", "mismatch", "unchecked", null]) expect(canBeCover(s)).toBe(false);
+  });
+});

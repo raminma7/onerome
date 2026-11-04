@@ -7,6 +7,7 @@ import {
   livenessBrowserCredentials, thresholds,
 } from "@/lib/face/aws";
 import { evaluateLiveness, evaluateMatch, evaluatePhoto, type FaceVerificationFailure } from "@/lib/face/decision";
+import { checkAllPhotos } from "@/lib/face/photo-check";
 import { logger } from "@/lib/logger";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
@@ -146,7 +147,11 @@ export async function completeFaceVerificationAction(sessionId: unknown): Promis
     }
 
     await finish("passed", { liveness: result.confidence, similarity });
+    // The cover was checked (one clear face) and matches the live selfie: it shows the user alone.
+    await admin.from("profile_photos").update({ face_status: "solo", face_similarity: similarity ?? null, face_checked_at: new Date().toISOString() }).eq("id", photo.id);
     await admin.from("profiles").update({ verification: "verified", verified_photo_id: photo.id, verified_at: new Date().toISOString() }).eq("id", userId);
+    // Every other photo is now compared with the verified face (no new selfie needed).
+    await checkAllPhotos(admin, userId).catch((e) => logger.error("face.bulk_check_failed", e));
     await admin.from("notifications").insert({ user_id: userId, type: "verification_status", data: { status: "verified" } });
     logger.info("face.verified");
     revalidatePath("/[locale]", "layout");
