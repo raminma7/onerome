@@ -56,7 +56,7 @@ export function DiscoverDeck({ cards }: { cards: DeckCard[] }) {
           leaving === "right" ? "translate-x-16 rotate-2 opacity-0" : leaving === "left" ? "-translate-x-16 -rotate-2 opacity-0" : "animate-fade-up"
         }`}
       >
-        <div className="relative">
+        <div className="relative self-start">
           <PhotoCarousel photos={card.profile.photos} name={card.profile.display_name ?? ""} className="h-[52dvh] w-full rounded-[2rem] shadow-lift md:aspect-[3/4] md:h-auto" />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 rounded-b-[2rem] bg-gradient-to-t from-ink/80 via-ink/30 to-transparent p-6 pt-20 text-ivory">
             <ProfileHeading profile={card.profile} />

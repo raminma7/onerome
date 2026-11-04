@@ -28,7 +28,7 @@ export default async function ProfilePage({ params }: PageProps<"/[locale]/profi
 
   return (
     <article className="mx-auto grid max-w-5xl gap-8 md:grid-cols-[minmax(0,420px)_1fr]">
-      <div className="relative">
+      <div className="relative self-start">
         <PhotoCarousel photos={data.photos} name={data.display_name ?? ""} className="aspect-[3/4] w-full rounded-[2rem] shadow-lift" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 rounded-b-[2rem] bg-gradient-to-t from-ink/80 to-transparent p-6 pt-20 text-ivory">
           <ProfileHeading profile={data} />

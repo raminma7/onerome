@@ -137,8 +137,10 @@ export function ProfileHeading({ profile, className }: { profile: ProfileViewDat
   return (
     <div className={className}>
       <h2 className="flex items-center gap-2 text-4xl leading-none">
-        {profile.display_name}
-        {profile.age != null && <span className="text-3xl text-current/70">, {profile.age}</span>}
+        <span>
+          {profile.display_name}
+          {profile.age != null && <span className="text-3xl opacity-80">, {profile.age}</span>}
+        </span>
         {profile.is_verified && <BadgeCheck className="size-6 text-gold" aria-label={c("verified")} />}
       </h2>
       {profile.neighborhood_name && (
