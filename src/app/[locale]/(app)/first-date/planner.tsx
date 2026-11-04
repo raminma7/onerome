@@ -18,6 +18,8 @@ type Plan = {
   venueId: string | null; scheduledFor: string | null; proposedByMe: boolean;
 } | null;
 
+const CATEGORY_EMOJI: Record<string, string> = { cafe: "☕", restaurant: "🍝", wine_bar: "🍷", gelateria: "🍦", culture: "🏛️", park: "🌳", experience: "🚣" };
+
 const CATEGORY_GRADIENT: Record<string, string> = {
   cafe: "from-[#c89b6d] to-[#6b4226]", restaurant: "from-[#c0563f] to-[#5c1520]", wine_bar: "from-[#7a1f2b] to-[#2a0e14]",
   gelateria: "from-[#f1c6a8] to-[#c97b63]", culture: "from-[#d8c3a0] to-[#7d6748]", park: "from-[#9caf6e] to-[#4d5a2c]",
@@ -44,44 +46,47 @@ export function FirstDatePlanner({ connectionId, partnerName, plan, bookingStatu
   return (
     <div className="space-y-6">
       {/* Status card */}
-      <Card className="p-6">
+      <Card className="bg-night noise relative overflow-hidden !rounded-[2.25rem] p-6 text-white [&_.text-muted]:text-white/60">
+        <div className="bg-brand pointer-events-none absolute -right-20 -top-24 size-72 rounded-full opacity-50 blur-3xl" />
+        <div className="relative">
         {!unlocked ? (
           <div className="space-y-4">
             {plan?.partnerOptedIn && !plan.meOptedIn && <Notice tone="success">{t("partnerReady", { name: partnerName })}</Notice>}
             {plan?.meOptedIn ? (
-              <p className="flex items-center gap-2 text-muted"><Heart className="size-4 text-bordeaux" /> {t("waitingPartner", { name: partnerName })}</p>
+              <p className="flex items-center gap-3 font-display text-3xl"><Heart className="size-6 animate-heartbeat text-rose" fill="currentColor" /> {t("waitingPartner", { name: partnerName })}</p>
             ) : (
               <Button size="lg" loading={pending} onClick={() => run(() => firstDateOptInAction(connectionId))}><Heart /> {t("optIn")}</Button>
             )}
           </div>
         ) : plan.status === "confirmed" && proposedVenue && plan.scheduledFor ? (
           <div className="space-y-3">
-            <p className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-gold"><CalendarCheck className="size-4" /> {t("confirmedTitle")}</p>
-            <p className="font-display text-3xl">{t("confirmedText", { venue: proposedVenue.name, date: format.dateTime(new Date(plan.scheduledFor), { dateStyle: "full", timeStyle: "short" }) })}</p>
+            <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-apricot"><CalendarCheck className="size-4" /> {t("confirmedTitle")}</p>
+            <p className="font-display text-4xl">{t("confirmedText", { venue: proposedVenue.name, date: format.dateTime(new Date(plan.scheduledFor), { dateStyle: "full", timeStyle: "short" }) })}</p>
             <p className="flex items-center gap-1.5 text-sm text-muted"><MapPin className="size-4" /> {proposedVenue.address}</p>
             <Badge tone={bookingStatus === "confirmed" ? "success" : bookingStatus === "declined" ? "danger" : "neutral"}>
               {t(`booking.${(bookingStatus ?? "none") as "none"}`)}
             </Badge>
             <div className="flex flex-wrap gap-2 pt-2">
-              <Button variant="outline" size="sm" onClick={() => run(() => firstDateCancelAction(connectionId))}>{t("change")}</Button>
+              <Button variant="light" size="sm" onClick={() => run(() => firstDateCancelAction(connectionId))}>{t("change")}</Button>
             </div>
           </div>
         ) : proposedVenue && plan.scheduledFor ? (
           <div className="space-y-3">
-            <p className="text-xs uppercase tracking-[0.2em] text-gold">{t("proposal")} · {plan.proposedByMe ? t("proposedByYou") : t("proposedBy", { name: partnerName })}</p>
-            <p className="font-display text-3xl">{proposedVenue.name}</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-apricot">{t("proposal")} · {plan.proposedByMe ? t("proposedByYou") : t("proposedBy", { name: partnerName })}</p>
+            <p className="font-display text-5xl">{proposedVenue.name}</p>
             <p className="text-sm text-muted">{format.dateTime(new Date(plan.scheduledFor), { dateStyle: "full", timeStyle: "short" })}</p>
             {plan.meConfirmed ? (
               <p className="text-sm text-muted">{t("youConfirmed")} {t("waitingConfirmation", { name: partnerName })}</p>
             ) : (
               <Button loading={pending} onClick={() => run(() => firstDateConfirmAction(connectionId))}>{t("confirm")}</Button>
             )}
-            <div><Button variant="link" onClick={() => run(() => firstDateCancelAction(connectionId))}>{t("cancel")}</Button></div>
+            <div><Button variant="link" className="text-white/70" onClick={() => run(() => firstDateCancelAction(connectionId))}>{t("cancel")}</Button></div>
           </div>
         ) : (
-          <p className="text-muted">{t("unlocked")}</p>
+          <p className="font-display text-3xl">{t("unlocked")}</p>
         )}
-        <div className="mt-5 space-y-1 border-t border-line/70 pt-4 text-xs text-muted">
+        </div>
+        <div className="relative mt-5 space-y-1 border-t border-white/10 pt-4 text-xs text-muted">
           <p className="flex items-start gap-2"><ShieldCheck className="mt-0.5 size-3.5 shrink-0" /> {t("safetyTip")}</p>
           <p className="flex items-start gap-2"><MapPin className="mt-0.5 size-3.5 shrink-0" /> {t("privacyNote")}</p>
         </div>
@@ -89,7 +94,7 @@ export function FirstDatePlanner({ connectionId, partnerName, plan, bookingStatu
 
       {/* Venues */}
       <section>
-        <h2 className="text-3xl">{v("title")}</h2>
+        <h2 className="text-5xl">{v("title")}</h2>
         <p className="mb-4 text-sm text-muted">{v("subtitle")}</p>
         <div className="scrollbar-none -mx-4 mb-5 flex gap-2 overflow-x-auto px-4">
           <Chip selected={!category} onClick={() => setCategory(null)}>{v("all")}</Chip>
@@ -101,20 +106,21 @@ export function FirstDatePlanner({ connectionId, partnerName, plan, bookingStatu
         <ul className="grid gap-4 sm:grid-cols-2">
           {shown.map((x) => (
             <li key={x.id}>
-              <Card className={cn("overflow-hidden transition", selected === x.id && "ring-2 ring-bordeaux")}>
-                <div className={cn("relative h-36 bg-gradient-to-br", CATEGORY_GRADIENT[x.category])}>
+              <Card className={cn("overflow-hidden !rounded-[2rem] transition duration-300 hover:-translate-y-1 hover:shadow-lift", selected === x.id && "ring-2 ring-coral")}>
+                <div className={cn("relative h-44 bg-gradient-to-br", CATEGORY_GRADIENT[x.category])}>
+                  <span className="absolute bottom-3 right-4 text-6xl drop-shadow-lg">{CATEGORY_EMOJI[x.category]}</span>
                   {x.image_urls[0] && (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={x.image_urls[0]} alt="" className="absolute inset-0 size-full object-cover" />
                   )}
                   <div className="absolute left-3 top-3 flex gap-2">
-                    <Badge className="bg-ivory/90">{v(`category.${x.category}`)}</Badge>
+                    <Badge tone="glass">{v(`category.${x.category}`)}</Badge>
                     {x.is_partner && <Badge tone="gold" className="bg-gold-soft">{v("partner")}</Badge>}
                   </div>
                 </div>
                 <div className="space-y-2 p-5">
                   <div className="flex items-start justify-between gap-3">
-                    <h3 className="text-2xl leading-tight">{x.name}</h3>
+                    <h3 className="text-3xl leading-tight">{x.name}</h3>
                     <span className="text-sm text-muted" aria-label={v("price")}>{"€".repeat(x.price_level)}</span>
                   </div>
                   <p className="flex items-center gap-1 text-xs text-muted"><MapPin className="size-3.5" /> {x.address}</p>

@@ -58,18 +58,18 @@ export function NotificationList({ userId, initial, pushAvailable }: { userId: s
       {items.length === 0 ? (
         <EmptyState icon={<BellRing />} title={t("empty")} />
       ) : (
-        <ul className="divide-y divide-line/70 overflow-hidden rounded-[var(--radius-card)] border border-line/70 bg-white/70">
+        <ul className="divide-y divide-ink/[0.06] overflow-hidden rounded-[1.75rem] bg-white/85 shadow-soft ring-1 ring-white">
           {items.map((n) => {
             const Icon = ICONS[n.type] ?? Bell;
             return (
               <li key={n.id}>
-                <Link href={notificationLink(n)} className={cn("flex gap-4 px-5 py-4 transition hover:bg-cream/60", !n.read_at && "bg-bordeaux-soft/30")}>
-                  <span className={cn("mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-full", !n.read_at ? "bg-bordeaux text-ivory" : "bg-cream text-muted")}>
+                <Link href={notificationLink(n)} className={cn("relative flex gap-4 px-5 py-4 transition hover:bg-ink/[0.03]", !n.read_at && "bg-bordeaux-soft/40")}>
+                  <span className={cn("squircle mt-0.5 flex size-11 shrink-0 items-center justify-center", !n.read_at ? "bg-brand text-white shadow-glow" : "bg-ink/[0.06] text-muted")}>
                     <Icon className="size-4" />
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="flex items-baseline justify-between gap-2">
-                      <span className="font-medium">{t(`types.${n.type}` as "types.like_received")}</span>
+                      <span className="font-semibold">{t(`types.${n.type}` as "types.like_received")}</span>
                       <span className="shrink-0 text-[11px] text-muted">{format.relativeTime(new Date(n.created_at), now)}</span>
                     </span>
                     <span className="mt-0.5 block text-sm text-muted">{body(n)}</span>

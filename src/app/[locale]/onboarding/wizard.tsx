@@ -10,7 +10,8 @@ import {
   type Neighborhood, type PreferencesDraft, type ProfileDraft,
 } from "@/components/profile/profile-fields";
 import { Button } from "@/components/ui/button";
-import { Notice, Progress } from "@/components/ui/card";
+import { Notice } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { useErrorText } from "@/lib/use-action";
 import { preferencesSchema, profileSchema } from "@/lib/validation/schemas";
 import { completeOnboardingAction } from "@/server/actions/onboarding";
@@ -130,17 +131,21 @@ export function OnboardingWizard(props: {
   );
 
   return (
-    <div className="bg-travertine-texture min-h-dvh">
+    <div className="bg-ambient min-h-dvh">
       <header className="mx-auto flex max-w-2xl items-center justify-between px-5 py-5">
         <Logo className="text-xl" />
         <LanguageSwitcher persist />
       </header>
       <main className="mx-auto max-w-2xl px-5 pb-32">
-        <p className="text-xs uppercase tracking-[0.2em] text-muted">{t("step", { current: draft.step + 1, total: STEPS.length })}</p>
-        <Progress value={((draft.step + 1) / STEPS.length) * 100} className="mt-3" />
+        <div className="flex gap-1.5" aria-label={t("step", { current: draft.step + 1, total: STEPS.length })}>
+          {STEPS.map((s, i) => (
+            <span key={s} className={cn("h-1.5 flex-1 rounded-full transition-all duration-500", i <= draft.step ? "bg-brand" : "bg-ink/[0.08]")} />
+          ))}
+        </div>
+        <p className="mt-3 text-xs font-semibold uppercase tracking-[0.18em] text-coral">{t("step", { current: draft.step + 1, total: STEPS.length })}</p>
         <section key={step} className="mt-8 animate-fade-up">
-          <h1 className="text-4xl sm:text-5xl">{t(`steps.${step}`)}</h1>
-          <p className="mb-8 mt-2 text-muted">{intro}</p>
+          <h1 className="text-5xl sm:text-6xl">{t(`steps.${step}`)}</h1>
+          <p className="mb-8 mt-3 text-[15px] text-muted">{intro}</p>
 
           {step === "basics" && <BasicsFields value={draft.profile} onChange={setProfile} errors={errors} />}
           {step === "photos" && (
@@ -158,7 +163,7 @@ export function OnboardingWizard(props: {
           {step === "consent" && (
             <div className="space-y-4">
               {(["sensitive_data", "terms", "marketing"] as const).map((key) => (
-                <label key={key} className="flex items-start gap-3 rounded-2xl border border-line bg-white/60 p-4 text-sm leading-relaxed text-ink-soft">
+                <label key={key} className="flex items-start gap-3 rounded-[1.5rem] bg-white/80 p-5 text-sm leading-relaxed text-ink-soft shadow-soft ring-1 ring-white">
                   <input
                     type="checkbox"
                     className="mt-1 size-4 shrink-0 accent-[var(--color-bordeaux)]"
@@ -174,8 +179,8 @@ export function OnboardingWizard(props: {
         </section>
       </main>
 
-      <footer className="safe-bottom fixed inset-x-0 bottom-0 border-t border-line/60 bg-ivory/95 backdrop-blur">
-        <div className="mx-auto flex max-w-2xl items-center justify-between gap-3 px-5 py-4">
+      <footer className="fixed inset-x-0 bottom-0 px-4 pb-[max(env(safe-area-inset-bottom),12px)]">
+        <div className="glass mx-auto flex max-w-2xl items-center justify-between gap-3 rounded-full p-2 shadow-lift">
           <Button variant="ghost" onClick={() => go(-1)} disabled={draft.step === 0 || saving}>
             <ArrowLeft /> {c("back")}
           </Button>

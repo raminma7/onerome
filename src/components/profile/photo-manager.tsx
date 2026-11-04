@@ -94,10 +94,10 @@ export function PhotoManager({ userId, initial, onChange }: { userId: string; in
   return (
     <div className="grid grid-cols-3 gap-3">
       {photos.map((photo, i) => (
-        <div key={photo.id} className={cn("group relative aspect-[3/4] overflow-hidden rounded-2xl bg-travertine", i === 0 && "ring-2 ring-bordeaux ring-offset-2 ring-offset-ivory")}>
+        <div key={photo.id} className={cn("group relative aspect-[3/4] overflow-hidden rounded-[1.5rem] bg-travertine shadow-soft", i === 0 && "col-span-2 row-span-2 ring-2 ring-coral ring-offset-2 ring-offset-ivory")}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           {photo.url && <img src={photo.url} alt="" className="size-full object-cover" />}
-          {i === 0 && <span className="absolute left-2 top-2 rounded-full bg-bordeaux px-2 py-0.5 text-[10px] font-medium text-ivory">{t("cover")}</span>}
+          {i === 0 && <span className="bg-brand absolute left-2.5 top-2.5 rounded-full px-2.5 py-1 text-[11px] font-semibold text-white">{t("cover")}</span>}
           <div className="absolute inset-x-0 bottom-0 flex justify-between gap-1 bg-gradient-to-t from-ink/60 p-2">
             {i !== 0 ? (
               <button type="button" onClick={() => makeCover(photo.id)} className="rounded-full bg-ivory/90 p-1.5 text-ink" aria-label={t("makeCover")} title={t("makeCover")}>
@@ -115,7 +115,7 @@ export function PhotoManager({ userId, initial, onChange }: { userId: string; in
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={uploading}
-          className="flex aspect-[3/4] flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-line bg-white/50 text-sm text-muted transition hover:border-bordeaux/50 hover:text-bordeaux disabled:opacity-60"
+          className="flex aspect-[3/4] flex-col items-center justify-center gap-2 rounded-[1.5rem] border-2 border-dashed border-coral/30 bg-white/60 text-sm font-medium text-coral transition hover:border-coral hover:bg-white disabled:opacity-60"
         >
           {uploading ? <span className="size-5 animate-spin rounded-full border-2 border-current border-t-transparent" /> : <ImagePlus className="size-6" />}
           {uploading ? t("uploading") : t("addPhoto")}

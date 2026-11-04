@@ -142,21 +142,21 @@ export function ChatRoom(props: {
   };
 
   return (
-    <div className="-mx-4 -mb-10 -mt-6 flex h-[calc(100dvh-152px)] flex-col sm:mx-auto sm:max-w-3xl md:-mb-6 md:mt-0 md:h-[calc(100dvh-128px)] md:overflow-hidden md:rounded-[var(--radius-card)] md:border md:border-line/70 md:bg-white/60 md:shadow-soft">
+    <div className="-mx-4 -mb-32 -mt-6 flex h-[calc(100dvh-56px)] flex-col sm:mx-auto sm:max-w-3xl md:-mb-6 md:mt-0 md:h-[calc(100dvh-150px)] md:overflow-hidden md:rounded-[2rem] md:bg-white/50 md:shadow-lift md:ring-1 md:ring-white">
       {/* Header */}
-      <div className="flex items-center gap-3 border-b border-line/70 bg-ivory/90 px-3 py-2.5 backdrop-blur">
+      <div className="glass z-10 flex items-center gap-3 border-x-0 border-t-0 px-3 py-2.5">
         <Link href="/connection" className="rounded-full p-2 text-muted hover:bg-cream" aria-label="Back"><ArrowLeft className="size-5" /></Link>
         <Link href={`/profile/${props.partner.id}`} className="flex min-w-0 flex-1 items-center gap-3">
-          <Photo src={props.partner.photo} alt={props.partner.name} className="size-10 rounded-full" />
+          <span className="bg-brand rounded-full p-[2px]"><Photo src={props.partner.photo} alt={props.partner.name} className="size-11 rounded-full ring-2 ring-white" /></span>
           <div className="min-w-0">
-            <p className="truncate font-display text-xl leading-tight">{props.partner.name}</p>
-            {active && props.deadline && <p className="truncate text-[11px] text-muted"><Countdown deadline={props.deadline} /></p>}
+            <p className="truncate font-display text-2xl leading-tight">{props.partner.name}</p>
+            {active && props.deadline && <p className="flex items-center gap-1.5 truncate text-[11px] font-medium text-coral"><span className="size-1.5 animate-pulse rounded-full bg-coral" /><Countdown deadline={props.deadline} /></p>}
           </div>
         </Link>
         <DropdownMenu.Root>
           <DropdownMenu.Trigger className="rounded-full p-2 text-muted hover:bg-cream" aria-label={t("menu")}><MoreVertical className="size-5" /></DropdownMenu.Trigger>
           <DropdownMenu.Portal>
-            <DropdownMenu.Content align="end" sideOffset={6} className="z-50 min-w-48 rounded-2xl border border-line bg-ivory p-1.5 shadow-lift">
+            <DropdownMenu.Content align="end" sideOffset={6} className="glass z-50 min-w-52 rounded-2xl p-1.5 shadow-lift">
               <DropdownMenu.Item onSelect={() => router.push("/first-date")} className="cursor-pointer rounded-xl px-3 py-2 text-sm outline-none data-[highlighted]:bg-cream">{nav("firstDate")}</DropdownMenu.Item>
               <DropdownMenu.Item onSelect={() => { setReportMessage(null); setReportOpen(true); }} className="flex cursor-pointer items-center gap-2 rounded-xl px-3 py-2 text-sm outline-none data-[highlighted]:bg-cream"><Flag className="size-4" /> {s("reportSubmit")}</DropdownMenu.Item>
               <DropdownMenu.Item onSelect={() => setBlockOpen(true)} className="flex cursor-pointer items-center gap-2 rounded-xl px-3 py-2 text-sm text-danger outline-none data-[highlighted]:bg-cream"><Ban className="size-4" /> {s("blockConfirm")}</DropdownMenu.Item>
@@ -168,7 +168,7 @@ export function ChatRoom(props: {
       {/* Messages */}
       <div
         ref={scroller}
-        className="flex-1 space-y-1.5 overflow-y-auto bg-travertine-texture px-3 py-4 sm:px-5"
+        className="bg-ambient flex-1 space-y-1.5 overflow-y-auto px-3 pb-6 pt-4 sm:px-5"
         onScroll={(e) => {
           const el = e.currentTarget;
           stickToBottom.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80;
@@ -177,23 +177,28 @@ export function ChatRoom(props: {
       >
         {hasOlder && (
           <div className="flex justify-center pb-2">
-            <button onClick={loadOlder} className="rounded-full bg-ivory/80 px-4 py-1.5 text-xs text-muted shadow-soft">{t("loadOlder")}</button>
+            <button onClick={loadOlder} className="glass rounded-full px-4 py-1.5 text-xs font-medium text-muted shadow-soft">{t("loadOlder")}</button>
           </div>
         )}
-        {messages.length === 0 && <p className="mx-auto mt-10 max-w-xs text-center font-display text-xl text-muted">{t("empty")}</p>}
+        {messages.length === 0 && (
+          <div className="mx-auto mt-16 flex max-w-xs flex-col items-center text-center">
+            <span className="bg-brand mb-5 flex size-16 animate-heartbeat items-center justify-center rounded-full text-white shadow-glow">♥</span>
+            <p className="font-display text-3xl text-ink-soft">{t("empty")}</p>
+          </div>
+        )}
         {messages.map((m, i) => {
           const mine = m.sender_id === props.meId;
           const showDay = i === 0 || new Date(messages[i - 1].created_at).toDateString() !== new Date(m.created_at).toDateString();
           const read = mine && !m.status && partnerReadAt && new Date(partnerReadAt) >= new Date(m.created_at);
           return (
             <div key={m.id}>
-              {showDay && <p className="py-3 text-center text-[11px] uppercase tracking-wider text-muted">{dayLabel(m.created_at)}</p>}
+              {showDay && <p className="py-4 text-center"><span className="glass rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-muted">{dayLabel(m.created_at)}</span></p>}
               <div className={cn("group flex", mine ? "justify-end" : "justify-start")}>
-                <div className={cn("relative max-w-[80%] rounded-3xl px-4 py-2.5 text-[15px] leading-snug shadow-sm",
-                  mine ? "rounded-br-lg bg-bordeaux text-ivory" : "rounded-bl-lg bg-white text-ink",
+                <div className={cn("relative max-w-[80%] animate-pop rounded-[1.4rem] px-4 py-2.5 text-[15px] leading-snug",
+                  mine ? "bg-brand rounded-br-md text-white shadow-[0_6px_20px_-8px_rgb(224_56_75/0.6)]" : "rounded-bl-md bg-white text-ink shadow-soft",
                   m.status === "failed" && "bg-danger/80")}>
                   <p className="whitespace-pre-wrap break-words">{m.body}</p>
-                  <div className={cn("mt-1 flex items-center justify-end gap-1 text-[10px]", mine ? "text-ivory/70" : "text-muted")}>
+                  <div className={cn("mt-1 flex items-center justify-end gap-1 text-[10px]", mine ? "text-white/75" : "text-muted")}>
                     {format.dateTime(new Date(m.created_at), { hour: "2-digit", minute: "2-digit" })}
                     {mine && (m.status === "sending" ? <Clock className="size-3" aria-label={t("sending")} />
                       : m.status === "failed" ? <AlertCircle className="size-3" aria-label={t("failed")} />
@@ -219,7 +224,7 @@ export function ChatRoom(props: {
       </div>
 
       {/* Composer */}
-      <div className="border-t border-line/70 bg-ivory/95 p-3">
+      <div className="glass border-x-0 border-b-0 p-3 pb-[max(env(safe-area-inset-bottom),12px)]">
         {!active ? (
           <Notice>{t("closed", { days: props.retentionDays })}</Notice>
         ) : !props.meSubscribed ? (
@@ -236,10 +241,10 @@ export function ChatRoom(props: {
               maxLength={2000}
               placeholder={t("placeholder")}
               aria-label={t("placeholder")}
-              className="max-h-36 min-h-12 flex-1 resize-none rounded-3xl border border-line bg-white px-4 py-3 text-[15px] focus:border-bordeaux/50 focus:outline-none focus:ring-4 focus:ring-bordeaux/10"
+              className="max-h-36 min-h-12 flex-1 resize-none rounded-[1.5rem] border-0 bg-ink/[0.05] px-5 py-3 text-[15px] transition focus:bg-white focus:outline-none focus:ring-4 focus:ring-coral/15"
             />
             <button type="submit" disabled={!text.trim()} aria-label={t("send")}
-              className="flex size-12 shrink-0 items-center justify-center rounded-full bg-bordeaux text-ivory transition active:scale-95 disabled:opacity-40">
+              className="bg-brand flex size-12 shrink-0 items-center justify-center rounded-full text-white shadow-glow transition active:scale-90 disabled:opacity-35 disabled:shadow-none">
               <SendHorizontal className="size-5" />
             </button>
           </form>

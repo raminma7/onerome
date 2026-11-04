@@ -71,13 +71,27 @@
     "price": "5,99 €",
     "pricePeriod": "/ mese",
     "priceText": "Per chattare, entrambe le persone devono avere un abbonamento attivo. Puoi disattivare il rinnovo in qualsiasi momento.",
-    "priceFeatures": ["Chat esclusiva in tempo reale", "Organizzazione del First Date", "Disdici quando vuoi"],
+    "priceFeatures": [
+      "Chat esclusiva in tempo reale",
+      "Organizzazione del First Date",
+      "Disdici quando vuoi"
+    ],
     "safetyTitle": "Sicurezza per scelta",
     "safetyText": "Verifica email, segnalazione e blocco sempre disponibili, moderazione umana e gestione dei dati conforme al GDPR.",
     "footerLegal": "Note legali",
     "privacy": "Informativa privacy",
     "terms": "Termini d'uso",
-    "madeIn": "Fatto con cura a Roma"
+    "madeIn": "Fatto con cura a Roma",
+    "badge": "Solo a Roma · 18+",
+    "finalTitle": "La tua storia romana inizia con una persona.",
+    "finalText": "Registrati gratis in due minuti. Like, match e, quando è il momento giusto, esclusività.",
+    "mockMessage1": "Caffè a Monti sabato? ☕",
+    "mockMessage2": "Sì! Conosco il posto perfetto 😍",
+    "mockMatch": "È un match!",
+    "neighborhoodsTitle": "Da Trastevere a Monti, da Prati al Pigneto",
+    "statExclusive": "connessione esclusiva alla volta",
+    "statHours": "ore per rispondere, poi siete liberi",
+    "statFree": "per registrarti, mettere like e fare match"
   },
   "auth": {
     "loginTitle": "Bentornato/a",
@@ -166,51 +180,150 @@
     "draftKept": "Le tue risposte restano salvate se cambi lingua."
   },
   "profileOptions": {
-    "gender": { "woman": "Donna", "man": "Uomo", "non_binary": "Non binario" },
-    "genderPlural": { "woman": "Donne", "man": "Uomini", "non_binary": "Persone non binarie" },
+    "gender": {
+      "woman": "Donna",
+      "man": "Uomo",
+      "non_binary": "Non binario"
+    },
+    "genderPlural": {
+      "woman": "Donne",
+      "man": "Uomini",
+      "non_binary": "Persone non binarie"
+    },
     "goal": {
       "long_term": "Una relazione duratura",
       "marriage": "Matrimonio e famiglia",
       "open": "Qualcosa di leggero, aperto/a a di più",
       "figuring_out": "Lo sto ancora capendo"
     },
-    "goalShort": { "long_term": "Relazione duratura", "marriage": "Matrimonio", "open": "Aperto/a", "figuring_out": "Da capire" },
+    "goalShort": {
+      "long_term": "Relazione duratura",
+      "marriage": "Matrimonio",
+      "open": "Aperto/a",
+      "figuring_out": "Da capire"
+    },
     "interests": {
-      "art": "Arte", "architecture": "Architettura", "history": "Storia", "museums": "Musei", "opera": "Opera",
-      "theatre": "Teatro", "cinema": "Cinema", "music_live": "Musica dal vivo", "jazz": "Jazz", "reading": "Lettura",
-      "writing": "Scrittura", "photography": "Fotografia", "design": "Design", "fashion": "Moda", "cooking": "Cucina",
-      "wine": "Vino", "coffee": "Caffè", "street_food": "Street food", "travel": "Viaggi", "hiking": "Trekking",
-      "cycling": "Bici", "running": "Corsa", "football": "Calcio", "tennis": "Tennis", "yoga": "Yoga",
-      "gym": "Palestra", "dancing": "Ballo", "sea": "Mare", "nature": "Natura", "gardening": "Giardinaggio",
-      "volunteering": "Volontariato", "languages": "Lingue", "tech": "Tecnologia", "gaming": "Videogiochi", "pets": "Animali",
+      "art": "Arte",
+      "architecture": "Architettura",
+      "history": "Storia",
+      "museums": "Musei",
+      "opera": "Opera",
+      "theatre": "Teatro",
+      "cinema": "Cinema",
+      "music_live": "Musica dal vivo",
+      "jazz": "Jazz",
+      "reading": "Lettura",
+      "writing": "Scrittura",
+      "photography": "Fotografia",
+      "design": "Design",
+      "fashion": "Moda",
+      "cooking": "Cucina",
+      "wine": "Vino",
+      "coffee": "Caffè",
+      "street_food": "Street food",
+      "travel": "Viaggi",
+      "hiking": "Trekking",
+      "cycling": "Bici",
+      "running": "Corsa",
+      "football": "Calcio",
+      "tennis": "Tennis",
+      "yoga": "Yoga",
+      "gym": "Palestra",
+      "dancing": "Ballo",
+      "sea": "Mare",
+      "nature": "Natura",
+      "gardening": "Giardinaggio",
+      "volunteering": "Volontariato",
+      "languages": "Lingue",
+      "tech": "Tecnologia",
+      "gaming": "Videogiochi",
+      "pets": "Animali",
       "meditation": "Meditazione"
     },
     "personality": {
-      "curious": "Curioso/a", "calm": "Calmo/a", "adventurous": "Avventuroso/a", "romantic": "Romantico/a", "ironic": "Ironico/a",
-      "creative": "Creativo/a", "organised": "Organizzato/a", "spontaneous": "Spontaneo/a", "empathetic": "Empatico/a",
-      "ambitious": "Ambizioso/a", "introvert": "Introverso/a", "extrovert": "Estroverso/a"
+      "curious": "Curioso/a",
+      "calm": "Calmo/a",
+      "adventurous": "Avventuroso/a",
+      "romantic": "Romantico/a",
+      "ironic": "Ironico/a",
+      "creative": "Creativo/a",
+      "organised": "Organizzato/a",
+      "spontaneous": "Spontaneo/a",
+      "empathetic": "Empatico/a",
+      "ambitious": "Ambizioso/a",
+      "introvert": "Introverso/a",
+      "extrovert": "Estroverso/a"
     },
     "values": {
-      "family": "Famiglia", "career": "Carriera", "faith": "Fede", "honesty": "Onestà", "kindness": "Gentilezza",
-      "freedom": "Libertà", "culture": "Cultura", "sustainability": "Sostenibilità", "loyalty": "Lealtà",
-      "personal_growth": "Crescita personale", "community": "Comunità", "humour": "Umorismo"
+      "family": "Famiglia",
+      "career": "Carriera",
+      "faith": "Fede",
+      "honesty": "Onestà",
+      "kindness": "Gentilezza",
+      "freedom": "Libertà",
+      "culture": "Cultura",
+      "sustainability": "Sostenibilità",
+      "loyalty": "Lealtà",
+      "personal_growth": "Crescita personale",
+      "community": "Comunità",
+      "humour": "Umorismo"
     },
     "languages": {
-      "it": "Italiano", "en": "Inglese", "es": "Spagnolo", "fr": "Francese", "de": "Tedesco", "pt": "Portoghese",
-      "ro": "Rumeno", "ar": "Arabo", "zh": "Cinese", "ru": "Russo", "fa": "Persiano", "uk": "Ucraino",
-      "pl": "Polacco", "other": "Altro"
+      "it": "Italiano",
+      "en": "Inglese",
+      "es": "Spagnolo",
+      "fr": "Francese",
+      "de": "Tedesco",
+      "pt": "Portoghese",
+      "ro": "Rumeno",
+      "ar": "Arabo",
+      "zh": "Cinese",
+      "ru": "Russo",
+      "fa": "Persiano",
+      "uk": "Ucraino",
+      "pl": "Polacco",
+      "other": "Altro"
     },
     "lifestyleQuestion": {
-      "smoking": "Fumo", "drinking": "Alcol", "exercise": "Sport", "children": "Figli", "pets": "Animali",
+      "smoking": "Fumo",
+      "drinking": "Alcol",
+      "exercise": "Sport",
+      "children": "Figli",
+      "pets": "Animali",
       "rhythm": "Ritmo quotidiano"
     },
     "lifestyle": {
-      "smoking": { "never": "Mai", "sometimes": "A volte", "regularly": "Regolarmente" },
-      "drinking": { "never": "Mai", "socially": "In compagnia", "often": "Spesso" },
-      "exercise": { "rarely": "Raramente", "sometimes": "A volte", "often": "Spesso" },
-      "children": { "have": "Ho figli", "want": "Vorrei figli", "open": "Aperto/a", "dont_want": "Non voglio figli" },
-      "pets": { "have": "Ho animali", "like": "Amo gli animali", "allergic": "Allergico/a" },
-      "rhythm": { "early_bird": "Mattiniero/a", "flexible": "Flessibile", "night_owl": "Nottambulo/a" }
+      "smoking": {
+        "never": "Mai",
+        "sometimes": "A volte",
+        "regularly": "Regolarmente"
+      },
+      "drinking": {
+        "never": "Mai",
+        "socially": "In compagnia",
+        "often": "Spesso"
+      },
+      "exercise": {
+        "rarely": "Raramente",
+        "sometimes": "A volte",
+        "often": "Spesso"
+      },
+      "children": {
+        "have": "Ho figli",
+        "want": "Vorrei figli",
+        "open": "Aperto/a",
+        "dont_want": "Non voglio figli"
+      },
+      "pets": {
+        "have": "Ho animali",
+        "like": "Amo gli animali",
+        "allergic": "Allergico/a"
+      },
+      "rhythm": {
+        "early_bird": "Mattiniero/a",
+        "flexible": "Flessibile",
+        "night_owl": "Nottambulo/a"
+      }
     }
   },
   "compat": {
@@ -248,7 +361,7 @@
   },
   "likes": {
     "title": "Like e Match",
-    "receivedTab": "Ti hanno messo like",
+    "receivedTab": "Like ricevuti",
     "matchesTab": "Mutual Match",
     "receivedEmpty": "Ancora nessun nuovo like. Completa il profilo per farti notare.",
     "matchesEmpty": "Ancora nessun match. Quando vi piacerete a vicenda, li troverai qui.",
@@ -364,8 +477,13 @@
     "subtitle": "Caffè, trattorie e luoghi di cultura perfetti per un primo incontro.",
     "all": "Tutti",
     "category": {
-      "cafe": "Caffè", "restaurant": "Ristorante", "wine_bar": "Enoteca", "gelateria": "Gelateria",
-      "culture": "Cultura", "park": "Parco", "experience": "Esperienza"
+      "cafe": "Caffè",
+      "restaurant": "Ristorante",
+      "wine_bar": "Enoteca",
+      "gelateria": "Gelateria",
+      "culture": "Cultura",
+      "park": "Parco",
+      "experience": "Esperienza"
     },
     "price": "Prezzo",
     "partner": "Partner OneRome",
@@ -381,7 +499,11 @@
     "planName": "OneRome Plus",
     "price": "5,99 € / mese",
     "includes": "Incluso",
-    "features": ["Chat in tempo reale nella tua Connessione Esclusiva", "First Date e luoghi", "Rinnovo automatico, disdici quando vuoi"],
+    "features": [
+      "Chat in tempo reale nella tua Connessione Esclusiva",
+      "First Date e luoghi",
+      "Rinnovo automatico, disdici quando vuoi"
+    ],
     "freeIncludes": "Sempre gratis: registrazione, profilo, scoperta, like e match.",
     "subscribe": "Abbonati a 5,99 €/mese",
     "manage": "Gestisci abbonamento",
@@ -524,7 +646,12 @@
     "blockText": "Non vi vedrete più e qualsiasi connessione attiva terminerà immediatamente.",
     "blockConfirm": "Blocca",
     "blocked": "Utente bloccato.",
-    "reportStatus": { "open": "Aperta", "reviewing": "In revisione", "actioned": "Provvedimento preso", "dismissed": "Chiusa" },
+    "reportStatus": {
+      "open": "Aperta",
+      "reviewing": "In revisione",
+      "actioned": "Provvedimento preso",
+      "dismissed": "Chiusa"
+    },
     "emergency": "In caso di emergenza chiama il 112."
   },
   "legal": {
@@ -558,7 +685,12 @@
       "dates_confirmed_30d": "Appuntamenti confermati (30 giorni)"
     },
     "search": "Cerca per nome, email o ID",
-    "filter": { "all": "Tutti", "suspended": "Sospesi", "reported": "Segnalati", "verification_pending": "Verifica in attesa" },
+    "filter": {
+      "all": "Tutti",
+      "suspended": "Sospesi",
+      "reported": "Segnalati",
+      "verification_pending": "Verifica in attesa"
+    },
     "suspend": "Sospendi",
     "unsuspend": "Riattiva",
     "suspendReason": "Motivo",
@@ -573,12 +705,26 @@
     "newVenue": "Nuovo luogo",
     "venueSaved": "Luogo salvato",
     "fields": {
-      "name": "Nome", "slug": "Slug", "category": "Categoria", "neighborhood": "Quartiere", "address": "Indirizzo pubblico",
-      "description_it": "Descrizione (IT)", "description_en": "Descrizione (EN)", "price_level": "Fascia di prezzo (1-4)",
-      "image_urls": "URL immagini (una per riga)", "website": "Sito web", "is_partner": "Partner (accordo reale)",
-      "discount_it": "Offerta (IT)", "discount_en": "Offerta (EN)", "booking_mode": "Prenotazione", "is_active": "Attivo"
+      "name": "Nome",
+      "slug": "Slug",
+      "category": "Categoria",
+      "neighborhood": "Quartiere",
+      "address": "Indirizzo pubblico",
+      "description_it": "Descrizione (IT)",
+      "description_en": "Descrizione (EN)",
+      "price_level": "Fascia di prezzo (1-4)",
+      "image_urls": "URL immagini (una per riga)",
+      "website": "Sito web",
+      "is_partner": "Partner (accordo reale)",
+      "discount_it": "Offerta (IT)",
+      "discount_en": "Offerta (EN)",
+      "booking_mode": "Prenotazione",
+      "is_active": "Attivo"
     },
-    "bookingMode": { "none": "Nessuna prenotazione", "request": "Richiesta al locale" },
+    "bookingMode": {
+      "none": "Nessuna prenotazione",
+      "request": "Richiesta al locale"
+    },
     "noRows": "Nessun risultato",
     "forbidden": "Non hai accesso a quest'area."
   },

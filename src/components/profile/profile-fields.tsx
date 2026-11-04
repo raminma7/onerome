@@ -155,11 +155,11 @@ export function GoalFields({ value, onChange, errors = {} }: { value: ProfileDra
             onClick={() => onChange({ relationship_goal: g })}
             aria-pressed={value.relationship_goal === g}
             className={cn(
-              "rounded-2xl border px-5 py-4 text-left transition",
-              value.relationship_goal === g ? "border-bordeaux bg-bordeaux-soft/60 text-bordeaux-dark" : "border-line bg-white/60 hover:border-ink/25",
+              "rounded-[1.5rem] px-6 py-5 text-left transition-all duration-300 active:scale-[0.98]",
+              value.relationship_goal === g ? "bg-brand text-white shadow-glow" : "bg-white/85 text-ink shadow-soft ring-1 ring-white hover:-translate-y-0.5",
             )}
           >
-            <span className="font-display text-xl">{o(`goal.${g}`)}</span>
+            <span className="font-display text-[1.65rem] leading-tight">{o(`goal.${g}`)}</span>
           </button>
         ))}
       </div>

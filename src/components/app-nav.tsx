@@ -89,8 +89,8 @@ export function AppNav({ userId, initialUnread, inConnection, isAdmin }: { userI
         <LanguageSwitcher persist />
       </header>
 
-      {/* Mobile floating tab bar */}
-      <nav className="fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(env(safe-area-inset-bottom),12px)] md:hidden" aria-label="Main">
+      {/* Mobile floating tab bar (hidden in the full-screen chat) */}
+      <nav hidden={pathname.startsWith("/connection/chat")} className="fixed inset-x-0 bottom-0 z-40 px-4 pb-[max(env(safe-area-inset-bottom),12px)] md:hidden" aria-label="Main">
         <ul className="glass mx-auto grid max-w-md grid-cols-5 rounded-[1.75rem] p-1.5 shadow-lift">
           {ITEMS.map((item) => {
             const active = isActive(item.href);

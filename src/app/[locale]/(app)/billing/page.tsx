@@ -1,4 +1,4 @@
-import { Check, CreditCard, Lock } from "lucide-react";
+import { Check, CreditCard, Lock, Sparkles } from "lucide-react";
 import { getFormatter, getTranslations, setRequestLocale } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { Badge, Card, Notice } from "@/components/ui/card";
@@ -35,17 +35,19 @@ export default async function BillingPage({ params, searchParams }: PageProps<"/
       {returnStatus === "cancelled" && <Notice>{t("cancelled")}</Notice>}
       {!isStripeConfigured && <Notice tone="warning" title={c("notConfigured")}>{c("notConfiguredHint")}</Notice>}
 
-      <Card className="overflow-hidden">
-        <div className="bg-ink p-7 text-ivory">
+      <Card className="overflow-hidden !rounded-[2.25rem] !p-0">
+        <div className="bg-night noise relative overflow-hidden p-7 text-white">
+          <div className="bg-brand pointer-events-none absolute -right-20 -top-24 size-72 rounded-full opacity-60 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-24 -left-10 size-56 rounded-full bg-apricot/25 blur-3xl" />
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs uppercase tracking-[0.2em] text-gold">{t("planName")}</p>
-              <p className="mt-2 font-display text-5xl">{t("price")}</p>
+              <p className="relative flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-apricot"><Sparkles className="size-4" /> {t("planName")}</p>
+              <p className="relative mt-3 font-display text-6xl">{t("price")}</p>
             </div>
-            <Badge tone={active ? "success" : sub?.status === "past_due" ? "danger" : "neutral"}>{t(`status.${statusKey}`)}</Badge>
+            <Badge className="relative" tone={active ? "success" : sub?.status === "past_due" ? "danger" : "glass"}>{t(`status.${statusKey}`)}</Badge>
           </div>
           {sub?.current_period_end && active && (
-            <p className="mt-4 text-sm text-ivory/75">
+            <p className="relative mt-4 text-sm text-white/70">
               {sub.cancel_at_period_end
                 ? t("endsOn", { date: format.dateTime(new Date(sub.current_period_end), { dateStyle: "long" }) })
                 : t("renewsOn", { date: format.dateTime(new Date(sub.current_period_end), { dateStyle: "long" }) })}
@@ -58,7 +60,7 @@ export default async function BillingPage({ params, searchParams }: PageProps<"/
             <p className="mb-3 text-xs font-medium uppercase tracking-[0.15em] text-muted">{t("includes")}</p>
             <ul className="space-y-2">
               {(t.raw("features") as string[]).map((f) => (
-                <li key={f} className="flex items-start gap-3 text-sm"><Check className="mt-0.5 size-4 text-bordeaux" /> {f}</li>
+                <li key={f} className="flex items-center gap-3 text-[15px]"><span className="bg-brand flex size-6 shrink-0 items-center justify-center rounded-full text-white"><Check className="size-3.5" strokeWidth={3} /></span> {f}</li>
               ))}
             </ul>
           </div>

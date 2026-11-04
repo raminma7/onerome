@@ -1,10 +1,10 @@
 "use client";
-import { BadgeCheck, Camera } from "lucide-react";
+import { BadgeCheck, Bell, Camera, EyeOff, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Card, Notice } from "@/components/ui/card";
+import { IconTile, Notice } from "@/components/ui/card";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -19,20 +19,24 @@ export function VisibilitySettings({ isHidden, notifyLikes }: { isHidden: boolea
   const [likes, setLikes] = useState(notifyLikes);
   const [run] = useAction();
   return (
-    <Card className="space-y-5 p-5">
-      <h2 className="text-2xl">{t("visibility")}</h2>
-      <label className="flex items-center justify-between gap-4">
-        <span>
-          <span className="block text-sm">{t("hideProfile")}</span>
+    <section>
+      <h2 className="mb-2 px-4 font-sans text-xs font-semibold uppercase tracking-[0.16em] text-muted">{t("visibility")}</h2>
+      <div className="divide-y divide-ink/[0.06] overflow-hidden rounded-[1.75rem] bg-white/85 shadow-soft ring-1 ring-white">
+      <label className="flex items-center gap-3.5 px-4 py-3.5">
+        <IconTile className="bg-[#6c5b7b]"><EyeOff /></IconTile>
+        <span className="flex-1">
+          <span className="block text-[15px] font-medium">{t("hideProfile")}</span>
           <span className="block text-xs text-muted">{t("hideProfileHint")}</span>
         </span>
         <Switch checked={hidden} onCheckedChange={(v) => { setHidden(v); run(() => updateVisibilityAction({ is_hidden: v }), { onError: () => setHidden(!v) }); }} />
       </label>
-      <label className="flex items-center justify-between gap-4">
-        <span className="text-sm">{t("notifyLikes")}</span>
+      <label className="flex items-center gap-3.5 px-4 py-3.5">
+        <IconTile className="bg-[#ff9f0a]"><Bell /></IconTile>
+        <span className="flex-1 text-[15px] font-medium">{t("notifyLikes")}</span>
         <Switch checked={likes} onCheckedChange={(v) => { setLikes(v); run(() => updateVisibilityAction({ notify_likes: v }), { onError: () => setLikes(!v) }); }} />
       </label>
-    </Card>
+      </div>
+    </section>
   );
 }
 
@@ -60,8 +64,8 @@ export function VerificationCard({ userId, status }: { userId: string; status: s
   }
 
   return (
-    <Card className="space-y-3 p-5">
-      <h2 className="flex items-center gap-2 text-2xl">{t("verification")} {current === "verified" && <BadgeCheck className="size-5 text-gold" />}</h2>
+    <section className="space-y-3 rounded-[1.75rem] bg-white/85 p-5 shadow-soft ring-1 ring-white">
+      <h2 className="flex items-center gap-3 text-[1.7rem]"><IconTile className="bg-sky-500"><BadgeCheck /></IconTile>{t("verification")}</h2>
       {current === "verified" ? (
         <Notice tone="success">{t("verificationDone")}</Notice>
       ) : current === "pending" ? (
@@ -74,7 +78,7 @@ export function VerificationCard({ userId, status }: { userId: string; status: s
           <input ref={input} type="file" accept="image/jpeg,image/png,image/webp" capture="user" hidden onChange={(e) => upload(e.target.files?.[0])} />
         </>
       )}
-    </Card>
+    </section>
   );
 }
 
@@ -85,9 +89,14 @@ export function DeleteAccount() {
   const [word, setWord] = useState("");
   const [run, pending] = useAction();
   return (
-    <div className="border-t border-line/70 pt-4">
-      <Button variant="ghost" className="px-0 text-danger hover:bg-transparent" onClick={() => setOpen(true)}>{t("deleteAccount")}</Button>
-      <p className="text-xs text-muted">{t("deleteHint")}</p>
+    <div>
+      <button type="button" onClick={() => setOpen(true)} className="flex w-full items-center gap-3.5 px-4 py-3.5 text-left transition hover:bg-danger/5">
+        <IconTile className="bg-danger"><Trash2 /></IconTile>
+        <span className="flex-1">
+          <span className="block text-[15px] font-medium text-danger">{t("deleteAccount")}</span>
+          <span className="block text-xs text-muted">{t("deleteHint")}</span>
+        </span>
+      </button>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent title={t("deleteConfirmTitle")} description={t("deleteConfirmText")}>
           <Input value={word} onChange={(e) => setWord(e.target.value)} placeholder={t("deleteConfirmWord")} aria-label={t("deleteConfirmWord")} />

@@ -1,5 +1,6 @@
 "use client";
 import { useNow, useTranslations } from "next-intl";
+import { Ring } from "@/components/ui/card";
 
 export function formatRemaining(ms: number) {
   const totalMinutes = Math.max(0, Math.floor(ms / 60_000));
@@ -25,5 +26,23 @@ export function TimerBar({ since, deadline }: { since: string; deadline: string 
     <div className="h-1.5 w-full overflow-hidden rounded-full bg-travertine">
       <div className={`h-full rounded-full transition-[width] ${pct > 66 ? "bg-danger" : pct > 40 ? "bg-gold" : "bg-olive"}`} style={{ width: `${pct}%` }} />
     </div>
+  );
+}
+
+/** Large ring showing how much of the 72h window is left. */
+export function TimerRing({ since, deadline, size = 132 }: { since: string; deadline: string; size?: number }) {
+  const now = useNow({ updateInterval: 60_000 });
+  const start = new Date(since).getTime();
+  const end = new Date(deadline).getTime();
+  const left = Math.max(0, end - now.getTime());
+  const pct = Math.min(100, Math.max(0, (left / (end - start)) * 100));
+  const hours = Math.floor(left / 3_600_000);
+  return (
+    <Ring value={pct} size={size} stroke={size < 90 ? 6 : 9} track="rgb(255 255 255 / 0.12)">
+      <span className="text-center leading-none text-white">
+        <span className={size < 90 ? "block font-display text-3xl" : "block font-display text-5xl"}>{hours}</span>
+        <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/60">h</span>
+      </span>
+    </Ring>
   );
 }
