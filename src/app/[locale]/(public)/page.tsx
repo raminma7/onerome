@@ -31,7 +31,7 @@ function PhoneMockup({ t }: { t: (k: "mockMatch" | "mockMessage1" | "mockMessage
               <Ring value={87} size={26} stroke={3} track="rgb(255 255 255 / 0.2)"><Sparkles className="size-3 text-apricot" /></Ring>87%
             </div>
             <div className="absolute inset-x-4 bottom-4 text-white">
-              <p className="font-display text-4xl">Giulia <span className="font-sans text-xl font-light">31</span></p>
+              <p className="font-display text-3xl">Giulia <span className="font-sans text-xl font-light">31</span></p>
               <div className="mt-2 flex gap-1.5 text-[11px] font-medium">
                 <span className="glass-dark rounded-full px-2.5 py-1">Monti</span>
                 <span className="glass-dark rounded-full px-2.5 py-1">Arte · Cinema</span>
@@ -47,7 +47,7 @@ function PhoneMockup({ t }: { t: (k: "mockMatch" | "mockMessage1" | "mockMessage
       </div>
       {/* floating UI fragments */}
       <div className="glass absolute -left-14 top-24 hidden animate-float rounded-2xl px-4 py-3 shadow-lift [--r:-6deg] sm:block">
-        <p className="font-display text-2xl italic text-brand">{t("mockMatch")}</p>
+        <p className="font-display text-2xl text-brand">{t("mockMatch")}</p>
       </div>
       <div className="glass absolute -right-12 top-56 hidden w-48 animate-float rounded-2xl rounded-br-md px-3.5 py-2.5 text-[13px] text-ink shadow-lift [--r:4deg] [animation-delay:1s] sm:block">
         {t("mockMessage1")}
@@ -102,9 +102,9 @@ export default async function Landing({ params }: PageProps<"/[locale]">) {
             <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-white/85 ring-1 ring-white/15">
               <span className="size-1.5 animate-pulse rounded-full bg-coral" /> {t("badge")}
             </span>
-            <h1 className="mt-6 whitespace-pre-line text-[3.6rem] leading-[0.92] sm:text-[5.5rem]">
+            <h1 className="mt-6 whitespace-pre-line text-[3.1rem] leading-[0.95] sm:text-[4.6rem]">
               {t("title").split("\n").map((line, i, all) => (
-                <span key={i} className={cn("block", i === all.length - 1 && "italic text-brand-light")}>{line}</span>
+                <span key={i} className={cn("block", i === all.length - 1 && "text-brand-light")}>{line}</span>
               ))}
             </h1>
             <p className="mt-7 max-w-lg text-lg leading-relaxed text-white/70">{t("subtitle")}</p>
@@ -135,7 +135,7 @@ export default async function Landing({ params }: PageProps<"/[locale]">) {
         {/* Neighbourhood marquee */}
         <div className="relative z-10 border-t border-white/10 py-5">
           <div className="mask-fade-x overflow-hidden">
-            <div className="flex w-max animate-marquee gap-10 whitespace-nowrap font-display text-2xl italic text-white/40">
+            <div className="flex w-max animate-marquee gap-10 whitespace-nowrap font-display text-2xl text-white/40">
               {[...HOODS, ...HOODS].map((h, i) => <span key={i} className="flex items-center gap-10">{h}<span className="text-coral">✦</span></span>)}
             </div>
           </div>

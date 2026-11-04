@@ -30,8 +30,8 @@
   --color-success: #2f9e6e;
   --color-danger: #e0384b;
 
-  --font-serif: var(--font-display), "Instrument Serif", Georgia, serif;
-  --font-sans: var(--font-geist), "Geist", system-ui, sans-serif;
+  --font-serif: var(--font-outfit), "Outfit", system-ui, sans-serif;
+  --font-sans: var(--font-outfit), "Outfit", system-ui, sans-serif;
 
   --radius-card: 1.75rem;
   --shadow-soft: 0 1px 2px rgb(23 17 15 / 0.04), 0 10px 30px -14px rgb(23 17 15 / 0.18);
@@ -91,17 +91,16 @@
     background: var(--color-ivory);
     color: var(--color-ink);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
-    letter-spacing: -0.006em;
+    letter-spacing: -0.01em;
   }
   h1,
   h2,
   h3,
   .font-display {
     font-family: var(--font-serif);
-    font-weight: 400;
-    letter-spacing: -0.02em;
+    font-weight: 700;
+    letter-spacing: -0.035em;
     line-height: 1.02;
   }
   ::selection {

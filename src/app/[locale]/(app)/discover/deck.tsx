@@ -152,7 +152,7 @@ export function DiscoverDeck({ cards, myPhoto }: { cards: DeckCard[]; myPhoto?: 
                 <Heart className="size-7 text-white" fill="currentColor" />
               </div>
             </div>
-            <p className="font-display text-6xl italic text-brand-light">{t("matched")}</p>
+            <p className="font-display text-6xl text-brand-light">{t("matched")}</p>
             <p className="mt-3 text-white/75">{matched ? t("matchedText", { name: matched.display_name ?? "" }) : ""}</p>
             <div className="mt-8 flex w-full flex-col gap-3">
               <Link href="/likes?tab=matches" className={buttonVariants({ size: "lg" })}>{t("goToMatches")}</Link>

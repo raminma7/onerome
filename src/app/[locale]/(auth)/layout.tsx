@@ -16,7 +16,7 @@ export default async function AuthLayout({ children }: LayoutProps<"/[locale]">)
         <div className="relative">
           <div className="bg-brand mb-8 flex size-14 animate-heartbeat items-center justify-center rounded-2xl shadow-glow"><Heart className="size-6" fill="currentColor" /></div>
           <p className="max-w-md whitespace-pre-line font-display text-6xl leading-[0.95]">
-            {t("title").split("\n").map((l, i, a) => <span key={i} className={i === a.length - 1 ? "block italic text-brand-light" : "block"}>{l}</span>)}
+            {t("title").split("\n").map((l, i, a) => <span key={i} className={i === a.length - 1 ? "block text-brand-light" : "block"}>{l}</span>)}
           </p>
           <p className="mt-6 max-w-sm text-white/60">{t("rule72Text")}</p>
         </div>

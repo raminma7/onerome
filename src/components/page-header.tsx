@@ -5,7 +5,7 @@ export function PageHeader({ title, subtitle, action, eyebrow, className }: { ti
     <header className={cn("mb-7 flex animate-fade-up items-end justify-between gap-4", className)}>
       <div>
         {eyebrow && <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-coral">{eyebrow}</p>}
-        <h1 className="text-[2.75rem] sm:text-6xl">{title}</h1>
+        <h1 className="text-[2.3rem] sm:text-5xl">{title}</h1>
         {subtitle && <p className="mt-2 max-w-xl text-[15px] text-muted">{subtitle}</p>}
       </div>
       {action}

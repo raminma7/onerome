@@ -62,7 +62,7 @@ export default async function ConnectionPage({ params }: PageProps<"/[locale]/co
             <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-apricot ring-1 ring-white/10">
               <span className="size-1.5 animate-pulse rounded-full bg-coral" /> {t("title")}
             </span>
-            <h1 className="mt-3 text-[2.6rem] sm:text-6xl">{name}</h1>
+            <h1 className="mt-3 text-[2.2rem] sm:text-5xl">{name}</h1>
             <p className="mt-2 text-sm text-white/60">{t("since", { date: format.dateTime(new Date(connection.started_at), { dateStyle: "long" }) })}</p>
           </div>
           <div className="hidden sm:block">

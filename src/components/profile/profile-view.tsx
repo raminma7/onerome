@@ -199,7 +199,7 @@ export function ProfileHeading({ profile, className, size = "lg" }: { profile: P
   const o = useTranslations("profileOptions");
   return (
     <div className={className}>
-      <h2 className={cn("flex items-end gap-2 leading-[0.95] text-white", size === "lg" ? "text-[2.9rem]" : "text-4xl")}>
+      <h2 className={cn("flex items-end gap-2 leading-[0.95] text-white", size === "lg" ? "text-[2.3rem]" : "text-3xl")}>
         <span>
           {profile.display_name}
           {profile.age != null && <span className="ml-2 font-sans text-[0.55em] font-light text-white/85">{profile.age}</span>}
