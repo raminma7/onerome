@@ -1,6 +1,7 @@
 import { ArrowRight, CalendarHeart, Check, Clock3, HeartHandshake, MessageCircleHeart, ShieldCheck, Sparkles, UserRound } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { HeroPhone } from "@/components/landing/hero-phone";
 import { Logo } from "@/components/logo";
 import { buttonVariants } from "@/components/ui/button";
 import { Ring } from "@/components/ui/card";
@@ -10,58 +11,6 @@ import { getUserId } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
 const HOODS = ["Trastevere", "Monti", "Testaccio", "Prati", "Pigneto", "San Lorenzo", "Garbatella", "Ostiense", "Parioli", "Monteverde", "Esquilino", "Flaminio", "EUR", "Centro Storico", "Aventino", "Ponte Milvio"];
-
-/** Pure-CSS phone mockup showing the product (no fake people photos). */
-function PhoneMockup({ t }: { t: (k: "mockMatch" | "mockMessage1" | "mockMessage2" | "rule72Title") => string }) {
-  return (
-    <div className="relative mx-auto w-[290px] sm:w-[320px]">
-      <div className="bg-brand absolute -inset-10 rounded-full opacity-40 blur-3xl" />
-      <div className="relative rotate-[-4deg] rounded-[3rem] border border-white/15 bg-night-2 p-2.5 shadow-[0_40px_80px_-20px_rgb(0_0_0/0.6)]">
-        <div className="relative h-[560px] overflow-hidden rounded-[2.5rem] bg-ivory sm:h-[600px]">
-          <div className="absolute left-1/2 top-2.5 z-20 h-6 w-24 -translate-x-1/2 rounded-full bg-night" />
-          {/* app card */}
-          <div className="absolute inset-x-3 bottom-24 top-12 overflow-hidden rounded-[2rem] shadow-lift"
-            style={{ background: "radial-gradient(60% 50% at 25% 20%, #ff6a88 0%, transparent 70%), radial-gradient(60% 50% at 85% 35%, #ffb067 0%, transparent 70%), radial-gradient(70% 60% at 50% 90%, #8e1838 0%, transparent 70%), #e0384b" }}>
-            <svg viewBox="0 0 300 200" className="absolute inset-x-0 bottom-0 w-full fill-black/25">
-              <path d="M0 200V150h20v-6h10v6h14v-20h6v20h30v-30c0-18 14-34 34-38v-8h4v8c20 4 34 20 34 38v30h30v-24h8v24h20v-12c10-8 30-8 40 0v12h30v50z" />
-            </svg>
-            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent" />
-            <div className="absolute inset-x-4 top-3 flex gap-1">{[0, 1, 2].map((i) => <span key={i} className={cn("h-[3px] flex-1 rounded-full", i ? "bg-white/40" : "bg-white")} />)}</div>
-            <div className="glass-dark absolute right-3 top-6 flex items-center gap-1.5 rounded-full py-0.5 pl-0.5 pr-2.5 text-xs font-bold text-white">
-              <Ring value={87} size={26} stroke={3} track="rgb(255 255 255 / 0.2)"><Sparkles className="size-3 text-apricot" /></Ring>87%
-            </div>
-            <div className="absolute inset-x-4 bottom-4 text-white">
-              <p className="font-display text-3xl">Giulia <span className="font-sans text-xl font-light">31</span></p>
-              <div className="mt-2 flex gap-1.5 text-[11px] font-medium">
-                <span className="glass-dark rounded-full px-2.5 py-1">Monti</span>
-                <span className="glass-dark rounded-full px-2.5 py-1">Arte · Cinema</span>
-              </div>
-            </div>
-          </div>
-          <div className="absolute inset-x-0 bottom-6 flex items-center justify-center gap-4">
-            <span className="flex size-12 items-center justify-center rounded-full bg-white text-ink-soft shadow-lift">✕</span>
-            <span className="bg-brand flex size-14 items-center justify-center rounded-full text-white shadow-glow"><HeartHandshake className="size-6" /></span>
-            <span className="flex size-12 items-center justify-center rounded-full bg-white text-ink-soft shadow-lift">⌄</span>
-          </div>
-        </div>
-      </div>
-      {/* floating UI fragments */}
-      <div className="glass absolute -left-14 top-24 hidden animate-float rounded-2xl px-4 py-3 shadow-lift [--r:-6deg] sm:block">
-        <p className="font-display text-2xl text-brand">{t("mockMatch")}</p>
-      </div>
-      <div className="glass absolute -right-12 top-56 hidden w-48 animate-float rounded-2xl rounded-br-md px-3.5 py-2.5 text-[13px] text-ink shadow-lift [--r:4deg] [animation-delay:1s] sm:block">
-        {t("mockMessage1")}
-      </div>
-      <div className="bg-brand absolute -right-6 top-[19rem] hidden w-44 animate-float rounded-2xl rounded-bl-md px-3.5 py-2.5 text-[13px] text-white shadow-glow [--r:2deg] [animation-delay:2s] sm:block">
-        {t("mockMessage2")}
-      </div>
-      <div className="glass absolute -left-10 bottom-28 hidden animate-float items-center gap-3 rounded-2xl px-3 py-2.5 shadow-lift [--r:3deg] [animation-delay:1.5s] sm:flex">
-        <Ring value={66} size={40} stroke={4}><Clock3 className="size-4 text-coral" /></Ring>
-        <span className="text-sm font-semibold text-ink">72h</span>
-      </div>
-    </div>
-  );
-}
 
 export default async function Landing({ params }: PageProps<"/[locale]">) {
   const locale = toLocale((await params).locale);
@@ -127,8 +76,8 @@ export default async function Landing({ params }: PageProps<"/[locale]">) {
               ))}
             </div>
           </div>
-          <div className="animate-fade-in [animation-delay:200ms]">
-            <PhoneMockup t={(k) => t(k)} />
+          <div className="animate-fade-in pt-4 [animation-delay:200ms] lg:pt-0">
+            <HeroPhone />
           </div>
         </div>
 

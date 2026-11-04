@@ -91,7 +91,11 @@
     "neighborhoodsTitle": "Da Trastevere a Monti, da Prati al Pigneto",
     "statExclusive": "connessione esclusiva alla volta",
     "statHours": "ore per rispondere, poi siete liberi",
-    "statFree": "per registrarti, mettere like e fare match"
+    "statFree": "per registrarti, mettere like e fare match",
+    "heroHint": "Provalo: scorri le card o tocca ♥",
+    "mockMessage3": "Perfetto, alle 18 in Piazza della Madonna dei Monti 🌅",
+    "mockTyping": "sta scrivendo…",
+    "mockOnline": "Connessione esclusiva"
   },
   "auth": {
     "loginTitle": "Bentornato/a",

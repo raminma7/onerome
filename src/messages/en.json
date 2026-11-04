@@ -91,7 +91,11 @@
     "neighborhoodsTitle": "From Trastevere to Monti, from Prati to Pigneto",
     "statExclusive": "exclusive connection at a time",
     "statHours": "hours to reply, then you're both free",
-    "statFree": "to sign up, like and match"
+    "statFree": "to sign up, like and match",
+    "heroHint": "Try it: swipe the cards or tap ♥",
+    "mockMessage3": "Perfect, see you at 6 in Piazza della Madonna dei Monti 🌅",
+    "mockTyping": "typing…",
+    "mockOnline": "Exclusive connection"
   },
   "auth": {
     "loginTitle": "Welcome back",
