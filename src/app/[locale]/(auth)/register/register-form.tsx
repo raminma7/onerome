@@ -59,7 +59,7 @@ export function RegisterForm() {
       return;
     }
     sessionStorage.removeItem(DRAFT_KEY);
-    router.push(`/check-email?email=${encodeURIComponent(result.data.email)}`);
+    router.push(`/verify-email?email=${encodeURIComponent(result.data.email)}`);
   }
 
   const maxDate = new Date();

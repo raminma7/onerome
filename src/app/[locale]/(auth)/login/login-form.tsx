@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Notice } from "@/components/ui/card";
 import { Field, Input } from "@/components/ui/input";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { useErrorText } from "@/lib/use-action";
 import { loginAction } from "@/server/actions/auth";
 
@@ -12,6 +12,7 @@ export function LoginForm({ verifyError, next }: { verifyError?: boolean; next?:
   const t = useTranslations("auth");
   const locale = useLocale();
   const errorText = useErrorText();
+  const router = useRouter();
   const [error, setError] = useState<string | null>(verifyError ? t("verifyFailed") : null);
   const [pending, setPending] = useState(false);
 
@@ -26,7 +27,12 @@ export function LoginForm({ verifyError, next }: { verifyError?: boolean; next?:
       window.location.assign(safeNext);
       return;
     }
-    setError(result.error === "not_authenticated" ? t("emailNotConfirmed") : errorText(result.error));
+    if (result.error === "email_not_confirmed") {
+      // A fresh code was sent: finish the registration on the code screen.
+      router.push(`/verify-email?email=${encodeURIComponent(String(form.get("email") ?? ""))}`);
+      return;
+    }
+    setError(errorText(result.error));
     setPending(false);
   }
 

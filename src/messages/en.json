@@ -126,7 +126,16 @@
     "resend": "Resend email",
     "resent": "Email sent again.",
     "verifyFailed": "The link is invalid or has expired. Request a new one.",
-    "emailNotConfirmed": "Please confirm your email before logging in."
+    "emailNotConfirmed": "Please confirm your email before logging in.",
+    "codeTitle": "Check your email",
+    "codeText": "We sent a 6-digit code to {email}. Enter it to complete your registration.",
+    "codeLabel": "Verification code",
+    "codeSubmit": "Confirm and continue",
+    "codeResend": "Send a new code",
+    "codeResendIn": "New code in {seconds}s",
+    "codeSent": "New code sent.",
+    "codeExpires": "The code expires in 15 minutes. Check your spam folder too.",
+    "codeWrongEmail": "Wrong email? Sign up again"
   },
   "onboarding": {
     "title": "Your profile",
@@ -784,7 +793,10 @@
     "liveness_failed": "We couldn't confirm the live selfie. Good light, face the camera, and try again.",
     "face_mismatch": "The live selfie doesn't match your cover photo. Use a recent, real photo of yourself.",
     "photo_not_you": "This photo doesn't seem to show you. Only photos of yourself (alone or with others), places or things are allowed.",
-    "cover_must_be_you": "The cover must be a clear photo of just you."
+    "cover_must_be_you": "The cover must be a clear photo of just you.",
+    "invalid_code": "The code is wrong or has expired. Check it, or request a new one.",
+    "code_expired": "The code has expired. Request a new one.",
+    "email_not_confirmed": "Confirm your email with the code we just sent you."
   },
   "validation": {
     "required": "Required",
@@ -796,7 +808,8 @@
     "max": "Too long",
     "minInterests": "Choose at least 3",
     "chooseOne": "Choose at least one",
-    "ageRange": "Check the age range"
+    "ageRange": "Check the age range",
+    "code": "Enter the 6 digits"
   },
   "verify": {
     "title": "Verify your identity",

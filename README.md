@@ -182,7 +182,23 @@ Setup:
 3. Set `AWS_REKOGNITION_REGION` to an EU region that supports Face Liveness (e.g. `eu-west-1`).
 4. Sign a DPA with AWS and update the privacy policy/DPIA (biometric processing requires a DPIA under GDPR art. 35).
 
-### 5. Venue bookings
+### 5. Email verification code (signup)
+Registration is completed only after the user enters the **6-digit code** sent by email (no link):
+
+1. `signUp` → Supabase sends the confirmation email using `supabase/templates/confirmation.html` (`{{ .Token }}`).
+2. The user lands on `/verify-email` (six digit boxes, paste and iOS/Android autofill supported) →
+   `verifyEmailCodeAction` → `auth.verifyOtp({ type: "signup" })` creates the session → `/onboarding`.
+3. Logging in with an unconfirmed email sends a fresh code and opens `/verify-email`.
+4. Codes expire after **15 minutes** (`otp_expiry = 900`); a new code can be requested every **60 seconds**;
+   verification attempts are rate-limited by Supabase (`token_verifications`).
+
+Production setup (local config lives in `supabase/config.toml`):
+- Supabase Dashboard → Authentication → Email Templates → **Confirm signup**: paste the HTML of
+  `supabase/templates/confirmation.html` and use the same subject.
+- Authentication → Providers → Email: *Confirm email* on, **Email OTP expiration** 900 s, OTP length 6.
+- Configure a real SMTP sender (Authentication → Emails → SMTP), otherwise delivery is heavily rate-limited.
+
+### 6. Venue bookings
 Venues are managed from **Admin → Venues**. A First Date booking is only ever a *request* (`booking_requests`)
 until an admin or venue confirms it in **Admin → Bookings**. Discounts can only be set on venues marked as
 partners, which requires a real agreement.

@@ -126,7 +126,16 @@
     "resend": "Invia di nuovo",
     "resent": "Email inviata di nuovo.",
     "verifyFailed": "Il link non è valido o è scaduto. Richiedine uno nuovo.",
-    "emailNotConfirmed": "Conferma la tua email prima di accedere."
+    "emailNotConfirmed": "Conferma la tua email prima di accedere.",
+    "codeTitle": "Controlla la tua email",
+    "codeText": "Abbiamo inviato un codice di 6 cifre a {email}. Inseriscilo per completare la registrazione.",
+    "codeLabel": "Codice di verifica",
+    "codeSubmit": "Conferma e continua",
+    "codeResend": "Invia un nuovo codice",
+    "codeResendIn": "Nuovo codice tra {seconds}s",
+    "codeSent": "Nuovo codice inviato.",
+    "codeExpires": "Il codice scade tra 15 minuti. Controlla anche la cartella spam.",
+    "codeWrongEmail": "Email sbagliata? Registrati di nuovo"
   },
   "onboarding": {
     "title": "Il tuo profilo",
@@ -784,7 +793,10 @@
     "liveness_failed": "Non siamo riusciti a confermare il selfie dal vivo. Buona luce, guarda la fotocamera e riprova.",
     "face_mismatch": "Il selfie dal vivo non corrisponde alla foto di copertina. Usa una tua foto recente e reale.",
     "photo_not_you": "Questa foto non sembra ritrarre te. Sono ammesse solo foto tue (da solo/a o con altri), luoghi o oggetti.",
-    "cover_must_be_you": "La copertina deve essere una foto nitida solo tua."
+    "cover_must_be_you": "La copertina deve essere una foto nitida solo tua.",
+    "invalid_code": "Il codice è errato o scaduto. Controllalo oppure richiedine uno nuovo.",
+    "code_expired": "Il codice è scaduto. Richiedine uno nuovo.",
+    "email_not_confirmed": "Conferma la tua email con il codice che ti abbiamo appena inviato."
   },
   "validation": {
     "required": "Obbligatorio",
@@ -796,7 +808,8 @@
     "max": "Troppo lungo",
     "minInterests": "Scegline almeno 3",
     "chooseOne": "Scegline almeno uno",
-    "ageRange": "Controlla l'intervallo di età"
+    "ageRange": "Controlla l'intervallo di età",
+    "code": "Inserisci le 6 cifre"
   },
   "verify": {
     "title": "Verifica la tua identità",

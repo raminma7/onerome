@@ -68,6 +68,11 @@ export const onboardingSchema = z.object({
   }),
 });
 
+export const emailCodeSchema = z.object({
+  email: z.string().trim().toLowerCase().email("email"),
+  code: z.string().trim().regex(/^\d{6}$/, "code"),
+});
+
 export const uuid = z.uuid();
 export const localeSchema = z.enum(["it", "en"]);
 
