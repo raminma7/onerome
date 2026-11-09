@@ -591,7 +591,8 @@
       "verification_verified": "Il tuo profilo è ora verificato.",
       "verification_rejected": "Non siamo riusciti a verificare il tuo profilo. Puoi riprovare.",
       "verification_unverified": "La foto verificata è stata rimossa: verifica di nuovo per restare visibile."
-    }
+    },
+    "unread": "non letta"
   },
   "settings": {
     "title": "Impostazioni",

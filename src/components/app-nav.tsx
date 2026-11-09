@@ -4,7 +4,9 @@ import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Link, usePathname } from "@/i18n/navigation";
+import { NOTIFICATIONS_CHANGED } from "@/lib/notification-events";
 import { getBrowserClient } from "@/lib/supabase/client";
+import { subscribeAsUser } from "@/lib/supabase/realtime";
 import { cn } from "@/lib/utils";
 import { LanguageSwitcher } from "./language-switcher";
 import { Logo } from "./logo";
@@ -26,21 +28,30 @@ const ITEMS: Item[] = [
 export function AppNav({ userId, initialUnread, inConnection, isAdmin }: { userId: string; initialUnread: number; inConnection: boolean; isAdmin: boolean }) {
   const t = useTranslations("nav");
   const pathname = usePathname();
-  const [live, setLive] = useState({ base: initialUnread, extra: 0 });
-  if (live.base !== initialUnread) setLive({ base: initialUnread, extra: 0 });
-  const unread = initialUnread + live.extra;
+  // Unread count: starts from the server value and is re-read from the database whenever
+  // notifications change (new ones, read here or elsewhere, deleted).
+  const [counter, setCounter] = useState({ base: initialUnread, value: initialUnread });
+  if (counter.base !== initialUnread) setCounter({ base: initialUnread, value: initialUnread });
+  const unread = counter.value;
 
-  // Live unread badge through Supabase Realtime (RLS-filtered).
   useEffect(() => {
     const supabase = getBrowserClient();
-    const channel = supabase
-      .channel(`nav-notifications-${userId}`)
-      .on("postgres_changes", { event: "INSERT", schema: "public", table: "notifications", filter: `user_id=eq.${userId}` }, () =>
-        setLive((l) => ({ ...l, extra: l.extra + 1 })),
-      )
-      .subscribe();
+    let cancelled = false;
+    const refresh = async () => {
+      const { count } = await supabase.from("notifications").select("id", { count: "exact", head: true }).is("read_at", null);
+      if (!cancelled && typeof count === "number") setCounter((c) => ({ ...c, value: count }));
+    };
+    const unsubscribe = subscribeAsUser(`nav-notifications-${userId}`, (channel) =>
+      channel.on("postgres_changes", { event: "*", schema: "public", table: "notifications", filter: `user_id=eq.${userId}` }, () => {
+        void refresh();
+      }),
+    );
+    const onLocalChange = () => void refresh();
+    window.addEventListener(NOTIFICATIONS_CHANGED, onLocalChange);
     return () => {
-      supabase.removeChannel(channel);
+      cancelled = true;
+      window.removeEventListener(NOTIFICATIONS_CHANGED, onLocalChange);
+      unsubscribe();
     };
   }, [userId]);
 

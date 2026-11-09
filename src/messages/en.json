@@ -591,7 +591,8 @@
       "verification_verified": "Your profile is now verified.",
       "verification_rejected": "We couldn't verify your profile. You can try again.",
       "verification_unverified": "Your verified photo was removed: verify again to stay visible."
-    }
+    },
+    "unread": "unread"
   },
   "settings": {
     "title": "Settings",

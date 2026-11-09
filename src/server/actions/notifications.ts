@@ -9,6 +9,21 @@ async function session() {
   return { supabase, userId: (data?.claims?.sub as string | undefined) ?? null };
 }
 
+/** Marks one notification as read (seen). Idempotent; RLS limits it to the owner's rows. */
+export async function markNotificationReadAction(id: unknown): Promise<ActionResult> {
+  const parsed = z.uuid().safeParse(id);
+  if (!parsed.success) return fail("invalid_input");
+  const { supabase, userId } = await session();
+  if (!userId) return fail("not_authenticated");
+  const { error } = await supabase
+    .from("notifications")
+    .update({ read_at: new Date().toISOString() })
+    .eq("id", parsed.data)
+    .eq("user_id", userId)
+    .is("read_at", null);
+  return error ? fail(toErrorCode(error)) : ok();
+}
+
 export async function markAllNotificationsReadAction(): Promise<ActionResult> {
   const { supabase, userId } = await session();
   if (!userId) return fail("not_authenticated");

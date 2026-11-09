@@ -9,7 +9,9 @@ import { BlockDialog, ReportDialog } from "@/components/safety/safety-actions";
 import { Notice } from "@/components/ui/card";
 import { Link, useRouter } from "@/i18n/navigation";
 import { toErrorCode } from "@/lib/errors";
+import { announceNotificationsChanged } from "@/lib/notification-events";
 import { getBrowserClient } from "@/lib/supabase/client";
+import { subscribeAsUser } from "@/lib/supabase/realtime";
 import { useErrorText } from "@/lib/use-action";
 import { cn } from "@/lib/utils";
 import { EndConnectionButton } from "../end-button";
@@ -51,13 +53,13 @@ export function ChatRoom(props: {
   const canWrite = active && props.meSubscribed && props.partnerSubscribed;
 
   const markRead = useCallback(() => {
-    if (active) void supabase.rpc("mark_connection_read", { p_connection: props.connectionId });
+    if (active) void supabase.rpc("mark_connection_read", { p_connection: props.connectionId }).then(() => announceNotificationsChanged());
   }, [active, props.connectionId, supabase]);
 
   // Realtime: new messages, partner read receipts, connection closing.
   useEffect(() => {
-    const channel = supabase
-      .channel(`chat-${props.connectionId}`)
+    const unsubscribe = subscribeAsUser(`chat-${props.connectionId}`, (channel) =>
+      channel
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "messages", filter: `connection_id=eq.${props.connectionId}` }, (payload) => {
         const m = payload.new as Message;
         setMessages((prev) => {
@@ -78,11 +80,9 @@ export function ChatRoom(props: {
           router.refresh();
         }
       })
-      .subscribe();
+    );
     markRead();
-    return () => {
-      supabase.removeChannel(channel);
-    };
+    return unsubscribe;
   }, [props.connectionId, props.meId, supabase, markRead, router]);
 
   useLayoutEffect(() => {

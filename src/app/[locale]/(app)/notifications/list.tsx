@@ -7,9 +7,10 @@ import { notificationBodyKey, notificationLink, type NotificationRow } from "@/c
 import { PushToggle } from "@/components/notifications/push-toggle";
 import { Button } from "@/components/ui/button";
 import { Link, useRouter } from "@/i18n/navigation";
-import { getBrowserClient } from "@/lib/supabase/client";
+import { subscribeAsUser } from "@/lib/supabase/realtime";
 import { cn } from "@/lib/utils";
-import { markAllNotificationsReadAction } from "@/server/actions/notifications";
+import { announceNotificationsChanged } from "@/lib/notification-events";
+import { markAllNotificationsReadAction, markNotificationReadAction } from "@/server/actions/notifications";
 
 const ICONS: Record<string, typeof Bell> = {
   like_received: Heart, mutual_match: HeartHandshake, connection_started: HeartHandshake, new_message: MessageCircle,
@@ -24,23 +25,37 @@ export function NotificationList({ userId, initial, pushAvailable }: { userId: s
   const router = useRouter();
   const [items, setItems] = useState(initial);
 
-  useEffect(() => {
-    const supabase = getBrowserClient();
-    const channel = supabase
-      .channel(`notifications-${userId}`)
-      .on("postgres_changes", { event: "INSERT", schema: "public", table: "notifications", filter: `user_id=eq.${userId}` }, (p) =>
-        setItems((prev) => [p.new as NotificationRow, ...prev]),
-      )
-      .subscribe();
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [userId]);
+  useEffect(
+    () =>
+      subscribeAsUser(`notifications-${userId}`, (channel) =>
+        channel
+          .on("postgres_changes", { event: "INSERT", schema: "public", table: "notifications", filter: `user_id=eq.${userId}` }, (p) =>
+            setItems((prev) => (prev.some((n) => n.id === (p.new as NotificationRow).id) ? prev : [p.new as NotificationRow, ...prev])),
+          )
+          // Read elsewhere (e.g. opening the chat marks "new message" as read): keep the list in sync.
+          .on("postgres_changes", { event: "UPDATE", schema: "public", table: "notifications", filter: `user_id=eq.${userId}` }, (p) => {
+            const row = p.new as NotificationRow;
+            setItems((prev) => prev.map((n) => (n.id === row.id ? { ...n, read_at: row.read_at } : n)));
+          }),
+      ),
+    [userId],
+  );
 
   async function markAll() {
     setItems((prev) => prev.map((n) => ({ ...n, read_at: n.read_at ?? new Date().toISOString() })));
     await markAllNotificationsReadAction();
+    announceNotificationsChanged();
     router.refresh();
+  }
+
+  /** Opening a notification marks it as seen (optimistically) and updates the badge. */
+  function open(n: NotificationRow) {
+    if (n.read_at) return;
+    setItems((prev) => prev.map((x) => (x.id === n.id ? { ...x, read_at: new Date().toISOString() } : x)));
+    void markNotificationReadAction(n.id).then((result) => {
+      if (result.ok) announceNotificationsChanged();
+      else setItems((prev) => prev.map((x) => (x.id === n.id ? { ...x, read_at: null } : x)));
+    });
   }
 
   const body = (n: NotificationRow) => {
@@ -63,12 +78,13 @@ export function NotificationList({ userId, initial, pushAvailable }: { userId: s
             const Icon = ICONS[n.type] ?? Bell;
             return (
               <li key={n.id}>
-                <Link href={notificationLink(n)} className={cn("relative flex gap-4 px-5 py-4 transition hover:bg-ink/[0.03]", !n.read_at && "bg-bordeaux-soft/40")}>
+                <Link href={notificationLink(n)} onClick={() => open(n)} aria-label={!n.read_at ? `${t(`types.${n.type}` as "types.like_received")} (${t("unread")})` : undefined} className={cn("relative flex gap-4 px-5 py-4 transition hover:bg-ink/[0.03]", !n.read_at && "bg-bordeaux-soft/40")}>
                   <span className={cn("squircle mt-0.5 flex size-11 shrink-0 items-center justify-center", !n.read_at ? "bg-brand text-white shadow-glow" : "bg-ink/[0.06] text-muted")}>
                     <Icon className="size-4" />
                   </span>
+                  {!n.read_at && <span className="bg-brand absolute right-4 top-4 size-2.5 rounded-full" aria-hidden />}
                   <span className="min-w-0 flex-1">
-                    <span className="flex items-baseline justify-between gap-2">
+                    <span className="flex items-baseline justify-between gap-2 pr-4">
                       <span className="font-semibold">{t(`types.${n.type}` as "types.like_received")}</span>
                       <span className="shrink-0 text-[11px] text-muted">{format.relativeTime(new Date(n.created_at), now)}</span>
                     </span>
